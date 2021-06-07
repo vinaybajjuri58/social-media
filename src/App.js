@@ -6,6 +6,11 @@ function App() {
     <div className="App">
       <p>Hello World</p>
       <Link to="/counter">counter</Link>
+      {"||"}
+      <Link to="/posts">posts</Link>
+      {"||"}
+      <Link to="/notifications">notifications</Link>
+      {"||"}
       <RoutesComponent />
     </div>
   );
