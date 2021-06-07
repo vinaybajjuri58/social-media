@@ -1,13 +1,12 @@
 import React from "react";
-
-import { Counter } from "./features/counter/Counter";
-import "./App.css";
-
+import { Link } from "react-router-dom";
+import { RoutesComponent } from "./Routes";
 function App() {
   return (
     <div className="App">
       <p>Hello World</p>
-      <Counter />
+      <Link to="/counter">counter</Link>
+      <RoutesComponent />
     </div>
   );
 }
