@@ -9,6 +9,10 @@ function App() {
       {"||"}
       <Link to="/notifications">notifications</Link>
       {"||"}
+      <Link to="/login">login</Link>
+      {"||"}
+      <Link to="/signup">signup</Link>
+      {"||"}
       <RoutesComponent />
     </div>
   );
