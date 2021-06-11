@@ -85,6 +85,7 @@ export const ProfilePage = () => {
           <img src={imageData.coverImage} alt="coverImage" />
         )}
       </div>
+      <button>Update Profile</button>
     </div>
   );
 };
