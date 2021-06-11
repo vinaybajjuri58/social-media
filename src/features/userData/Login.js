@@ -20,6 +20,7 @@ export const Login = () => {
         <label>
           <p>Email :</p>
           <input
+            className="form-input rounded-sm bg-transparent"
             type="text"
             value={userData.email}
             onChange={handleChange}
@@ -30,6 +31,7 @@ export const Login = () => {
           <p>Password :</p>
           <input
             type="password"
+            className="form-input rounded-sm bg-transparent"
             value={userData.password}
             onChange={handleChange}
             name="email"

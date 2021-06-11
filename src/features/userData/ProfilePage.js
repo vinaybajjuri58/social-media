@@ -38,12 +38,18 @@ export const ProfilePage = () => {
       <div>
         <label>
           Bio :
-          <input type="text" value={userData.bio} onChange={handleTextChange} />
+          <input
+            type="text-area"
+            className="form-textarea rounded-sm bg-transparent"
+            value={userData.bio}
+            onChange={handleTextChange}
+          />
         </label>
         <label>
           websiteUrl :
           <input
             type="text"
+            className="form-input rounded-sm bg-transparent"
             value={userData.websiteUrl}
             onChange={handleTextChange}
           />

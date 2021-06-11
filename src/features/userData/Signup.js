@@ -20,6 +20,7 @@ export const SignUp = () => {
           userName :
           <input
             type="text"
+            className="form-input rounded-sm bg-transparent"
             name="userName"
             value={signUpData.userName}
             onChange={handleChange}
@@ -29,6 +30,7 @@ export const SignUp = () => {
           Email :
           <input
             type="text"
+            className="form-input rounded-sm bg-transparent"
             name="email"
             value={signUpData.email}
             onChange={handleChange}
@@ -38,6 +40,7 @@ export const SignUp = () => {
           Password :
           <input
             type="password"
+            className="form-input rounded-sm bg-transparent"
             name="password"
             value={signUpData.password}
             onChange={handleChange}
