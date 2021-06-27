@@ -5,3 +5,4 @@ export const userSlice = createSlice({
     status: "idle",
   },
 });
+export default userSlice.reducer;

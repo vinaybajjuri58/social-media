@@ -13,6 +13,8 @@ function App() {
       {"||"}
       <Link to="/signup">signup</Link>
       {"||"}
+      <Link to="/edit/profile">Edit Profile</Link>
+      {"||"}
       <RoutesComponent />
     </div>
   );

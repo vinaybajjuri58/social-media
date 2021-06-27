@@ -1,6 +1,6 @@
 import { Posts } from "./features/posts/Posts";
 import { Notifications } from "./features/notifications/Notifications";
-import { Login, SignUp, ProfilePage } from "./features/userData";
+import { Login, SignUp, EditProfile } from "./features/userData";
 import { Routes, Route } from "react-router-dom";
 export const RoutesComponent = () => {
   return (
@@ -9,7 +9,7 @@ export const RoutesComponent = () => {
       <Route path="/posts" element={<Posts />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/edit/profile" element={<EditProfile />} />
     </Routes>
   );
 };
