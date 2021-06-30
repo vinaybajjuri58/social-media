@@ -6,7 +6,7 @@ function App() {
   const authData = useSelector((store) => store.authData);
   return (
     <div className="flex">
-      {authData.isLoggedin && <Navbar />}
+      {authData.isLoggedIn && <Navbar />}
       <RoutesComponent />
     </div>
   );

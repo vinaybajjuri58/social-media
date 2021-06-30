@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const initialSignUpState = {
+  name: "",
   userName: "",
   email: "",
   password: "",
@@ -20,6 +21,14 @@ export const SignUp = () => {
         <div className="relative mt-4 bg-white shadow-md sm:rounded-lg text-left">
           <div className="h-2 bg-indigo-400 rounded-t-md"></div>
           <div className="py-6 px-8">
+            <label className="block font-semibold">Name </label>
+            <input
+              type="text"
+              className="border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-md"
+              name="name"
+              value={signUpData.name}
+              onChange={handleChange}
+            />
             <label className="block font-semibold">UserName </label>
             <input
               type="text"
