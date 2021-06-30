@@ -42,7 +42,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
       state.userToken = action.payload.token;
     },
-    [loginAPICall.rejected]: (state, action) => {
+    [loginAPICall.rejected]: (state) => {
       state.status = "error";
       state.errorMessage = "Login Failed";
     },
