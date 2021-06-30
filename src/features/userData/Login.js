@@ -13,7 +13,7 @@ export const Login = () => {
     }));
   };
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
+    <div className="w-full min-h-screen bg-gray-100 text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl mx-auto text-center">
         <span className="text-2xl font-light">Login to your account</span>
         <div className="relative mt-4 bg-white shadow-md sm:rounded-lg text-left">
