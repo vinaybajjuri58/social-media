@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAPICall } from "./authSlice";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 const initialLoginData = {
   email: "",
   password: "",
@@ -30,7 +29,6 @@ export const Login = () => {
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:max-w-xl mx-auto text-center">
-        <ToastContainer />
         <span className="text-2xl font-light">Login to your account</span>
         <div className="relative mt-4 bg-white shadow-md sm:rounded-lg text-left">
           <div className="h-2 bg-indigo-400 rounded-t-md"></div>

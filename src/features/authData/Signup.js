@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { signUp } from "./apiCalls";
+import { toast } from "react-toastify";
+
 const initialSignUpState = {
   name: "",
   userName: "",
@@ -7,12 +10,29 @@ const initialSignUpState = {
   password: "",
 };
 export const SignUp = () => {
+  const navigate = useNavigate();
   const [signUpData, setSignUpData] = useState(initialSignUpState);
   const handleChange = (e) => {
     setSignUpData((initialData) => ({
       ...initialData,
       [e.target.name]: e.target.value,
     }));
+  };
+  const signUpHandler = async () => {
+    toast.info("SigningUp !!");
+    const response = await signUp({
+      name: signUpData.name,
+      userName: signUpData.userName,
+      email: signUpData.email,
+      password: signUpData.password,
+    });
+    if (response.success === true) {
+      toast.success("SignedUp successfully");
+      setSignUpData(initialSignUpState);
+      navigate("/login");
+    } else {
+      toast.error("Signup failed");
+    }
   };
   return (
     <div className="w-full min-h-screen bg-gray-100 text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
@@ -53,7 +73,10 @@ export const SignUp = () => {
               value={signUpData.password}
               onChange={handleChange}
             />
-            <button class="mt-4 bg-indigo-500  text-white py-2 px-6 rounded-lg">
+            <button
+              onClick={signUpHandler}
+              class="mt-4 bg-indigo-500  text-white py-2 px-6 rounded-lg"
+            >
               SignUp
             </button>
             <Link className="text-sm ml-5  hover:underline" to="/login">
