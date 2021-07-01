@@ -5,6 +5,7 @@ import { getPosts } from "./postSlice";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { toast } from "react-toastify";
+import { AddPost } from "../../Components/AddPost";
 const override = css`
   display: block;
   margin: 80px 80px;
@@ -37,6 +38,7 @@ export const Posts = () => {
       )}
       {postsData.status === "success" && (
         <div>
+          <AddPost />
           {postsData.posts.map((post) => (
             <Post key={post.postId} postData={post} />
           ))}

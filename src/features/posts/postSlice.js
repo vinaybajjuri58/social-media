@@ -25,7 +25,6 @@ export const postSlice = createSlice({
     [getPosts.fulfilled]: (state, action) => {
       state.status = "success";
       state.posts = action.payload.posts;
-      console.log(state.posts);
     },
   },
 });
