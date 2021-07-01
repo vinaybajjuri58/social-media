@@ -1,4 +1,4 @@
-export const ProfileComponent = ({ userProfile, toggleDisplay }) => {
+export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
   const dummyAvatar =
     "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
   const dummyBackground =
@@ -54,17 +54,14 @@ export const ProfileComponent = ({ userProfile, toggleDisplay }) => {
         <div className="space-y-1 justify-center w-full mt-3 ml-3">
           <div>
             <h2 className="text-xl leading-6 font-bold text-black">
-              ℜ𝔦𝔠𝔞𝔯𝔡𝔬ℜ𝔦𝔟𝔢𝔦𝔯𝔬.dev
+              {userData.name}
             </h2>
             <p className="text-sm leading-5 font-medium text-gray-600">
-              @Ricardo_oRibeir
+              {userData.userName}
             </p>
           </div>
           <div className="mt-3">
-            <p className="text-black leading-tight mb-2">
-              Software Engineer / Designer / Entrepreneur <br />
-              Visit my website to test a working <b>Twitter Clone.</b>
-            </p>
+            <p className="text-black leading-tight mb-2">{userData.bio}</p>
             <div className="text-gray-600 flex">
               <span className="flex mr-2">
                 <a
@@ -72,18 +69,22 @@ export const ProfileComponent = ({ userProfile, toggleDisplay }) => {
                   target="#"
                   className="leading-5 ml-1 text-blue-400"
                 >
-                  www.RicardoRibeiroDEV.com
+                  {userData.website}
                 </a>
               </span>
             </div>
           </div>
           <div className=" pt-3 flex justify-start items-start w-full divide-x divide-gray-800 divide-solid">
             <div className="text-center pr-3">
-              <span className="font-bold text-black">520</span>
+              <span className="font-bold text-black">
+                {userData.following.length}
+              </span>
               <span className="text-gray-600"> Following</span>
             </div>
             <div className="text-center px-3">
-              <span className="font-bold text-black">23,4m </span>
+              <span className="font-bold text-black">
+                {userData.followers.length}{" "}
+              </span>
               <span className="text-gray-600"> Followers</span>
             </div>
           </div>
