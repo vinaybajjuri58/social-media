@@ -1,21 +1,53 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { getUserData } from "./profileSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { getUserData, resetStatus } from "./profileSlice";
 import { ProfileComponent } from "../../Components/Profile";
+import { useParams } from "react-router-dom";
+import { css } from "@emotion/react";
+import BeatLoader from "react-spinners/BeatLoader";
+import { toast } from "react-toastify";
+const override = css`
+  display: block;
+  margin: 80px 80px;
+  border-color: blue;
+`;
+const color = "blue";
 
 export const Profile = () => {
-  const authData = useSelector((store) => store.authData);
-  const userData = useSelector((store) => store.userData);
+  const profileData = useSelector((store) => store.profileData);
+  const dispatch = useDispatch();
+  const { userId } = useParams();
   useEffect(() => {
-    if (userData.status === "idle") {
-      console.log("In UseEffect");
-      getUserData({ token: authData.userToken });
+    if (profileData.status === "idle") {
+      dispatch(getUserData({ userId: userId }));
     }
-  }, [authData.userToken, userData.status]);
+  }, [profileData.status, dispatch, userId]);
+  useEffect(() => {
+    if (profileData.status === "success" && profileData.userId !== userId) {
+      dispatch(resetStatus());
+    }
+  }, [userId, profileData.userId, dispatch, profileData.status]);
+  useEffect(() => {
+    if (profileData.status === "error") {
+      toast.error("Error in loading user data");
+    }
+  }, [profileData.status]);
   return (
-    <div className="w-4/5">
-      <hr className="border-gray-800" />
-      <ProfileComponent />
+    <div className="w-full">
+      {profileData.status === "loading" && (
+        <BeatLoader
+          color={color}
+          loading={profileData.status}
+          css={override}
+          size={15}
+        />
+      )}
+      {profileData.status === "success" && (
+        <div className="w-4/5">
+          <hr className="border-gray-800" />
+          <ProfileComponent userData={profileData} />
+        </div>
+      )}
     </div>
   );
 };

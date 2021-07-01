@@ -31,7 +31,7 @@ export const UserProfile = () => {
     setDisplayEditProfile((state) => (state === "block" ? "none" : "block"));
   };
   return (
-    <div>
+    <div className="w-full">
       {userData.status === "loading" && (
         <BeatLoader
           color={color}
