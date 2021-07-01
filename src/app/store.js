@@ -8,7 +8,7 @@ import profileSlice from "../features/Profile/profileSlice";
 export const store = configureStore({
   reducer: {
     notifications: notificationReducer,
-    posts: postSlice,
+    postsData: postSlice,
     authData: authSlice,
     userData: userSlice,
     profileData: profileSlice,
