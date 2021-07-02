@@ -32,7 +32,11 @@ export const userSlice = createSlice({
     userImage: "",
     coverImage: "",
   },
-  reducers: {},
+  reducers: {
+    newPostAdded: (state, action) => {
+      state.posts.unshift(action.payload);
+    },
+  },
   extraReducers: {
     [getUserDataAPI.pending]: (state) => {
       state.status = "loading";
@@ -74,4 +78,5 @@ export const userSlice = createSlice({
     },
   },
 });
+export const { newPostAdded } = userSlice.actions;
 export default userSlice.reducer;

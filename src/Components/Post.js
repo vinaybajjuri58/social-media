@@ -13,7 +13,7 @@ export const Post = ({ postData }) => {
   const dummyUserImage =
     "https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png";
   return (
-    <div key={postId} className="w-5/6">
+    <div key={postId}>
       <div className="flex flex-shrink-0 p-4 pb-0">
         <Link to={`/profile/${userId}`} className="flex-shrink-0 group block">
           <div className="flex items-center">

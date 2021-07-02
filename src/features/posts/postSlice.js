@@ -13,7 +13,11 @@ export const postSlice = createSlice({
     errorMessage: "",
     posts: [],
   },
-  reducers: {},
+  reducers: {
+    addPostButtonClicked: (state, action) => {
+      state.posts.unshift(action.payload);
+    },
+  },
   extraReducers: {
     [getPosts.pending]: (state) => {
       state.status = "loading";
@@ -28,4 +32,5 @@ export const postSlice = createSlice({
     },
   },
 });
+export const { addPostButtonClicked } = postSlice.actions;
 export default postSlice.reducer;

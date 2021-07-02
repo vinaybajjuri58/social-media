@@ -1,12 +1,31 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { addPost } from "./apiCall";
 import { toast } from "react-toastify";
+import { css } from "@emotion/react";
+import BeatLoader from "react-spinners/BeatLoader";
+import { addPostButtonClicked } from "../features/posts/postSlice";
+import { newPostAdded } from "../features/userData/userSlice";
+const override = css`
+  display: block;
+  margin: auto 2px;
+  position: absolute;
+  top: 160px;
+  left: 260px;
+  align-self: center;
+  border-color: blue;
+`;
+const color = "blue";
+
 export const AddPost = () => {
   const { userToken } = useSelector((store) => store.authData);
+  const { userId, userImage, name, userName } = useSelector(
+    (store) => store.userData
+  );
   const [postContent, setPostContent] = useState("");
   const [errorInContent, setErrorInContent] = useState(null);
-  //   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setPostContent(e.target.value);
     if (postContent.length > 60) {
@@ -16,17 +35,48 @@ export const AddPost = () => {
     }
   };
   const handleSubmit = async () => {
+    setLoading(true);
     if (postContent.length > 0) {
-      const response = await addPost({
+      const { data } = await addPost({
         token: userToken,
         message: postContent,
       });
+      setLoading(false);
+      dispatch(
+        addPostButtonClicked({
+          userId,
+          userImage,
+          name,
+          userName,
+          postId: data.savedPost._id,
+          message: postContent,
+          likes: [],
+          comments: [],
+        })
+      );
+      dispatch(
+        newPostAdded({
+          userId,
+          userImage,
+          name,
+          userName,
+          postId: data.savedPost._id,
+          message: postContent,
+          likes: [],
+          comments: [],
+        })
+      );
+      setPostContent("");
     } else {
+      setLoading(false);
       toast.error("Post cannot be empty !");
     }
   };
   return (
-    <div className="w-5/6 rounded-lg shadow-lg bg-blue-50">
+    <div className=" rounded-lg shadow-lg bg-blue-50">
+      {loading && (
+        <BeatLoader color={color} loading={loading} css={override} size={15} />
+      )}
       <div className="relative p-4 pl-20">
         <img
           src="https://placekitten.com/g/50/50"

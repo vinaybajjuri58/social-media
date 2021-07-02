@@ -19,6 +19,6 @@ export const addPost = async ({ token, message }) => {
       message: "Please try again",
     };
   } finally {
-    return response.data;
+    return response;
   }
 };

@@ -37,7 +37,7 @@ export const Posts = () => {
         />
       )}
       {postsData.status === "success" && (
-        <div>
+        <div className="w-4/5">
           <AddPost />
           {postsData.posts.map((post) => (
             <Post key={post.postId} postData={post} />
