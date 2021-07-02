@@ -10,7 +10,7 @@ function App() {
     <div>
       <ToastContainer />
       <div className="flex">
-        <div className="sm:fixed md:relative">
+        <div className="fixed md:relative">
           {authData.isLoggedIn && <Navbar />}
         </div>
         <RoutesComponent />

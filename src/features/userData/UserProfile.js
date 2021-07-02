@@ -28,10 +28,8 @@ export const UserProfile = () => {
     }
   }, [authData.userToken, dispatch, userData.status]);
   useEffect(() => {
-    if (userData.status === "success") {
-      if (userData.userId !== authData.userId) {
-        dispatch(reload());
-      }
+    if (userData.status === "success" && userData.userId !== authData.userId) {
+      dispatch(reload());
     }
   }, [userData.status, userData.userId, authData.userId, dispatch]);
 
@@ -50,7 +48,7 @@ export const UserProfile = () => {
         />
       )}
       {userData.status === "success" && (
-        <div className="sm:w-full md:w-4/5">
+        <div className="w-full md:w-4/5">
           <hr className="border-gray-800" />
           <ProfileComponent
             userData={userData}
