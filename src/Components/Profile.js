@@ -10,7 +10,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
         style={{
           height: "200px",
           backgroundImage:
-            userData.coverImage.length > 0
+            userData.coverImage !== undefined && userData.coverImage.length > 0
               ? `url(${userData.coverImage})`
               : `url(${dummyBackground})`,
         }}
