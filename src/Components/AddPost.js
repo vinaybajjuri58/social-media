@@ -73,11 +73,11 @@ export const AddPost = () => {
     }
   };
   return (
-    <div className=" rounded-lg shadow-lg bg-blue-50">
+    <div className="rounded-lg shadow-lg bg-blue-50 z-0">
       {loading && (
         <BeatLoader color={color} loading={loading} css={override} size={15} />
       )}
-      <div className="relative p-4 pl-20">
+      <div className="relative p-4 pl-20 z-0">
         <img
           src="https://placekitten.com/g/50/50"
           className="absolute top-0 left-0 ml-4 mt-4 rounded-full"

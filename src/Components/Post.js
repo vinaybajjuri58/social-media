@@ -20,7 +20,7 @@ export const Post = ({ postData }) => {
           <div className="flex items-center">
             <div>
               <img
-                className="inline-block h-10 w-10 rounded-full"
+                className="inline-block h-10 w-10 rounded-full z-0"
                 src={userImage.length > 0 ? userImage : dummyUserImage}
                 alt={name}
               />

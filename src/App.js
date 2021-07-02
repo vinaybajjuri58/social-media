@@ -1,19 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { RoutesComponent } from "./Routes";
-import { Navbar } from "./Components";
+import { Navbar, TopNavBar } from "./Components";
 import { useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 function App() {
   const authData = useSelector((store) => store.authData);
+  const [displaySidebar, setDisplaySidebar] = useState(true);
+  const sidebarToggler = () => {
+    setDisplaySidebar((state) => !state);
+  };
   return (
     <div>
       <ToastContainer />
-      <div className="flex">
-        <div className="fixed md:relative">
+      <TopNavBar toggleDisplay={sidebarToggler} />
+      <div className="flex relative top-16">
+        <div
+          className="fixed"
+          style={{ display: displaySidebar ? "block" : "none" }}
+        >
           {authData.isLoggedIn && <Navbar />}
         </div>
-        <RoutesComponent />
+        <div className="w-full md:w-4/6 lg:w-8/12 md:relative md:left-60">
+          <RoutesComponent />
+        </div>
       </div>
     </div>
   );

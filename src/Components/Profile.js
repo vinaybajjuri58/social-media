@@ -28,11 +28,11 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
                           relative
                           border-4 border-gray-900
                           avatar
+                          sm:z-0
                         "
                   src={dummyAvatar}
-                  alt="Hello World"
+                  alt={userData.userName}
                 />
-                <div className="absolute"></div>
               </div>
             </div>
           </div>

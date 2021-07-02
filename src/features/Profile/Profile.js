@@ -43,7 +43,7 @@ export const Profile = () => {
         />
       )}
       {profileData.status === "success" && (
-        <div className="w-full md:w-4/5">
+        <div>
           <hr className="border-gray-800" />
           <ProfileComponent userData={profileData} />
           <div>
