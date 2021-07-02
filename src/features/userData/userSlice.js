@@ -39,6 +39,12 @@ export const userSlice = createSlice({
     reload: (state) => {
       state.status = "idle";
     },
+    profileDataUpdated: (state, action) => {
+      state.website = action.payload.websiteUrl;
+      state.bio = action.payload.bio;
+      state.userImage = action.payload.profileImage;
+      state.coverImage = action.payload.coverImage;
+    },
   },
   extraReducers: {
     [getUserDataAPI.pending]: (state) => {
@@ -81,5 +87,5 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { newPostAdded, reload } = userSlice.actions;
+export const { newPostAdded, reload, profileDataUpdated } = userSlice.actions;
 export default userSlice.reducer;

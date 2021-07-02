@@ -9,7 +9,10 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
         className="w-full bg-cover bg-no-repeat bg-center"
         style={{
           height: "200px",
-          backgroundImage: `url(${dummyBackground})`,
+          backgroundImage:
+            userData.coverImage.length > 0
+              ? `url(${userData.coverImage})`
+              : `url(${dummyBackground})`,
         }}
       ></div>
       <div className="p-4">
@@ -30,7 +33,11 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
                           avatar
                           sm:z-0
                         "
-                  src={dummyAvatar}
+                  src={
+                    userData.userImage.length > 0
+                      ? userData.userImage
+                      : dummyAvatar
+                  }
                   alt={userData.userName}
                 />
               </div>
@@ -62,7 +69,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
           </div>
           <div className="mt-3">
             <p className="text-black leading-tight mb-2">{userData.bio}</p>
-            <div className="text-gray-600 flex">
+            <div className="text-black flex">
               <span className="flex mr-2">
                 <a
                   href="https://ricardoribeirodev.com/personal/"

@@ -1,4 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { css } from "@emotion/react";
+import BeatLoader from "react-spinners/BeatLoader";
+import { updateProfile } from "./apiCalls";
+import { profileDataUpdated } from "./userSlice";
+const override = css`
+  display: block;
+  margin: auto 2px;
+  position: absolute;
+  top: 160px;
+  left: 260px;
+  align-self: center;
+  border-color: blue;
+`;
+const color = "blue";
 const initialUserData = {
   websiteUrl: "",
   profilePicUrl: "",
@@ -10,8 +26,35 @@ const imageUrls = {
   coverImage: null,
 };
 export const EditProfile = ({ displayState, changeDisplayState }) => {
+  const { website, bio, coverImage, userImage } = useSelector(
+    (store) => store.userData
+  );
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const { userToken } = useSelector((store) => store.authData);
   const [userData, setUserData] = useState(initialUserData);
   const [imageData, setImageData] = useState(imageUrls);
+  useEffect(() => {
+    setUserData((initialData) => ({
+      ...initialData,
+      websiteUrl: website,
+      bio: bio,
+    }));
+  }, [bio, website]);
+  useEffect(() => {
+    if (coverImage.length > 0) {
+      setImageData((initialData) => ({
+        ...initialData,
+        coverImage: coverImage,
+      }));
+    }
+    if (userImage.length > 0) {
+      setImageData((initialData) => ({
+        ...initialData,
+        profileImage: userImage,
+      }));
+    }
+  }, [coverImage, userImage]);
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     previewFile(file, e.target.name);
@@ -32,9 +75,45 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
       [e.target.name]: e.target.value,
     }));
   };
+  const handleSubmit = async () => {
+    setLoading(true);
+    const response = await updateProfile({
+      bio: userData.bio,
+      websiteUrl: userData.websiteUrl,
+      profileImage: imageData.profileImage,
+      coverImage: imageData.coverImage,
+      token: userToken,
+    });
+    setLoading(false);
+    if (response.success === true) {
+      dispatch(
+        profileDataUpdated({
+          bio: userData.bio,
+          websiteUrl: userData.websiteUrl,
+          profileImage: imageData.profileImage,
+          coverImage: imageData.coverImage,
+        })
+      );
+      toast.info("Updated profile data");
+    } else {
+      toast.error("Please try again !");
+    }
+  };
   return (
-    <div id="modal" style={{ display: displayState }} className="modal">
-      <div className="modal-content modal-theme sm:w-full">
+    <div
+      id="modal"
+      style={{ display: displayState }}
+      className="modal md:mt-16"
+    >
+      <div className="modal-content modal-theme md:w-8/12 m-auto -mt-6">
+        {loading && (
+          <BeatLoader
+            color={color}
+            loading={loading}
+            css={override}
+            size={15}
+          />
+        )}
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
             <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -60,7 +139,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
                       id="bio"
                       name="bio"
                       rows={3}
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md sm:w-full"
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block md:w-full  sm:text-sm border border-gray-300 rounded-md"
                       type="text-area"
                       value={userData.bio}
                       onChange={handleTextChange}
@@ -85,7 +164,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
                           id="company_website"
                           value={userData.websiteUrl}
                           onChange={handleTextChange}
-                          className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 sm:w-full"
+                          className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 "
                           placeholder="www.example.com"
                         />
                       </div>
@@ -150,7 +229,10 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
               </div>
 
               <div className="px-4 py-3 bg-gray-50  sm:px-6">
-                <button className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button
+                  onClick={handleSubmit}
+                  className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
                   Update Profile
                 </button>
               </div>
@@ -162,7 +244,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
         <button
           id="close-modal"
           onClick={changeDisplayState}
-          className="button button-warning modal-toggle"
+          className="button button-warning modal-toggle mt-20 mr-20 sm:mr-12"
         >
           X
         </button>
@@ -170,27 +252,3 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
     </div>
   );
 };
-
-// const uploadImage = async () => {
-//   if (!previewInputFile) {
-//     console.log("No image exists");
-//     return;
-//   }
-//   let response = {};
-//   try {
-//     response = await axios({
-//       method: "post",
-//       url: "url-path",
-//       data: {
-//         image: previewInputFile
-//       },
-//       headers: {
-//         "Content-type": "application/json",
-//         "Access-Control-Allow-Origin": true
-//       }
-//     });
-//     console.log(response.data.result);
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
