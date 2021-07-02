@@ -4,6 +4,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const initialAuthData = JSON.parse(localStorage.getItem("login")) || {
   isLoggedIn: false,
   userToken: null,
+  userId: "",
 };
 
 export const loginAPICall = createAsyncThunk(
@@ -25,6 +26,7 @@ export const authSlice = createSlice({
   initialState: {
     status: "idle",
     errorMessage: "",
+    userId: initialAuthData.userId,
     isLoggedIn: initialAuthData.isLoggedIn,
     userToken: initialAuthData.userToken,
   },
@@ -37,10 +39,15 @@ export const authSlice = createSlice({
     [loginAPICall.fulfilled]: (state, action) => {
       localStorage.setItem(
         "login",
-        JSON.stringify({ isLoggedIn: true, userToken: action.payload.token })
+        JSON.stringify({
+          isLoggedIn: true,
+          userToken: action.payload.token,
+          userId: action.payload.userId,
+        })
       );
       state.isLoggedIn = true;
       state.userToken = action.payload.token;
+      state.userId = action.payload.userId;
     },
     [loginAPICall.rejected]: (state) => {
       state.status = "error";

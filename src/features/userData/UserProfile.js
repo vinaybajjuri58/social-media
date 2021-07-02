@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { EditProfile } from "./EditProfile";
-import { getUserDataAPI } from "./userSlice";
+import { getUserDataAPI, reload } from "./userSlice";
 import { ProfileComponent, Post } from "../../Components";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -16,6 +17,7 @@ const color = "blue";
 export const UserProfile = () => {
   const authData = useSelector((store) => store.authData);
   const userData = useSelector((store) => store.userData);
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
     if (userData.status === "idle") {
@@ -25,6 +27,13 @@ export const UserProfile = () => {
       toast.error("Error in loading user data");
     }
   }, [authData.userToken, dispatch, userData.status]);
+  useEffect(() => {
+    if (userData.status === "success") {
+      if (userData.userId !== authData.userId) {
+        dispatch(reload());
+      }
+    }
+  }, [userData.status, userData.userId, authData.userId, dispatch]);
 
   const [displayEditProfile, setDisplayEditProfile] = useState("none");
   const toggleDisplay = () => {
@@ -41,7 +50,7 @@ export const UserProfile = () => {
         />
       )}
       {userData.status === "success" && (
-        <div className="w-4/5">
+        <div className="sm:w-full md:w-4/5">
           <hr className="border-gray-800" />
           <ProfileComponent
             userData={userData}

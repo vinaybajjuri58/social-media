@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, resetStatus } from "./profileSlice";
-import { ProfileComponent } from "../../Components/Profile";
+import { ProfileComponent, Post } from "../../Components";
 import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -43,9 +43,14 @@ export const Profile = () => {
         />
       )}
       {profileData.status === "success" && (
-        <div className="w-4/5">
+        <div className="sm:w-full md:w-4/5">
           <hr className="border-gray-800" />
           <ProfileComponent userData={profileData} />
+          <div>
+            {profileData.posts.map((post) => (
+              <Post key={post.postId} postData={post} />
+            ))}
+          </div>
         </div>
       )}
     </div>

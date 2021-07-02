@@ -34,7 +34,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
   };
   return (
     <div id="modal" style={{ display: displayState }} className="modal">
-      <div className="modal-content modal-theme">
+      <div className="modal-content modal-theme sm:w-full">
         <div className="md:col-span-1">
           <div className="px-4 sm:px-0">
             <h3 className="text-lg font-medium leading-6 text-gray-900">
@@ -48,7 +48,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
           <div className="shadow sm:rounded-md sm:overflow-hidden">
             <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
               <div className="grid grid-cols-3 gap-6">
-                <div className="mt-5 md:mt-0 md:col-span-2">
+                <div className="mt-5 md:mt-0 md:col-span-2 ">
                   <label
                     htmlFor="about"
                     className="block text-sm font-medium text-gray-700"
@@ -60,7 +60,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
                       id="bio"
                       name="bio"
                       rows={3}
-                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md sm:w-full"
                       type="text-area"
                       value={userData.bio}
                       onChange={handleTextChange}
@@ -85,7 +85,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
                           id="company_website"
                           value={userData.websiteUrl}
                           onChange={handleTextChange}
-                          className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300"
+                          className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300 sm:w-full"
                           placeholder="www.example.com"
                         />
                       </div>

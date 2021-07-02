@@ -25,6 +25,7 @@ export const Navbar = () => {
             to="/profile"
             activeClassName="bg-blue-200 text-blue-800"
             className=" mt-1 group  flex  items-center  px-2  py-2  text-base  leading-6  font-semibold rounded-full  hover:bg-blue-200  hover:text-blue-800"
+            end
           >
             Profile
           </NavLink>

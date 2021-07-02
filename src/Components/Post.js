@@ -1,21 +1,22 @@
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 export const Post = ({ postData }) => {
-  const {
-    userId,
-    userImage,
-    message,
-    userName,
-    name,
-    postId,
-    likes,
-    comments,
-  } = postData;
+  const { userId } = useSelector((store) => store.authData);
+  const { userImage, message, userName, name, postId, likes, comments } =
+    postData;
   const dummyUserImage =
     "https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png";
   return (
     <div key={postId}>
       <div className="flex flex-shrink-0 p-4 pb-0">
-        <Link to={`/profile/${userId}`} className="flex-shrink-0 group block">
+        <Link
+          to={
+            userId === postData.userId
+              ? "/profile"
+              : `/profile/${postData.userId}`
+          }
+          className="flex-shrink-0 group block"
+        >
           <div className="flex items-center">
             <div>
               <img

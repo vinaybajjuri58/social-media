@@ -36,6 +36,9 @@ export const userSlice = createSlice({
     newPostAdded: (state, action) => {
       state.posts.unshift(action.payload);
     },
+    reload: (state) => {
+      state.status = "idle";
+    },
   },
   extraReducers: {
     [getUserDataAPI.pending]: (state) => {
@@ -78,5 +81,5 @@ export const userSlice = createSlice({
     },
   },
 });
-export const { newPostAdded } = userSlice.actions;
+export const { newPostAdded, reload } = userSlice.actions;
 export default userSlice.reducer;
