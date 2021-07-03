@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { addPostButtonClicked } from "../features/posts/postSlice";
 import { newPostAdded } from "../features/userData/userSlice";
+const dummyUserImage = "https://placekitten.com/g/50/50";
 const override = css`
   display: block;
   margin: auto 2px;
@@ -79,8 +80,8 @@ export const AddPost = () => {
       )}
       <div className="relative p-4 pl-20 z-0">
         <img
-          src="https://placekitten.com/g/50/50"
           className="absolute top-0 left-0 ml-4 mt-4 rounded-full"
+          src={dummyUserImage}
           alt="Hello World"
         />
         <textarea

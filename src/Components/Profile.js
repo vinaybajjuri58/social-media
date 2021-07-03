@@ -21,9 +21,10 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
         style={{
           height: "200px",
           backgroundImage:
-            userData.coverImage !== undefined && userData.coverImage.length > 0
-              ? `url(${userData.coverImage})`
-              : `url(${dummyBackground})`,
+            userData.coverImage === undefined &&
+            userData.coverImage.length === 0
+              ? `url(${dummyBackground})`
+              : `url(${userData.coverImage})`,
         }}
       ></div>
       <div className="p-4">
@@ -106,6 +107,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
             </div>
             {followingModalDisplay && (
               <FollowingModal
+                following={userData.following}
                 displayState={followingModalDisplay}
                 toggleDisplay={toggleFollowingModalDisplay}
               />
@@ -123,6 +125,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
             </div>
             {followersModalDisplay && (
               <FollowersModal
+                followers={userData.followers}
                 displayState={followersModalDisplay}
                 toggleDisplay={toggleFollowersModalDisplay}
               />
