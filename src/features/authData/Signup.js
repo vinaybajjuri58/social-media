@@ -75,7 +75,7 @@ export const SignUp = () => {
             />
             <button
               onClick={signUpHandler}
-              class="mt-4 bg-indigo-500  text-white py-2 px-6 rounded-lg"
+              className="mt-4 bg-indigo-500  text-white py-2 px-6 rounded-lg"
             >
               SignUp
             </button>

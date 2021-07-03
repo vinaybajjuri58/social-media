@@ -44,11 +44,11 @@ export const Post = ({ postData }) => {
 
         <div className="flex items-center py-4">
           <div className="flex-1 flex items-center text-xs text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
-            <i class="fas fa-comment"></i>
+            <i className="fas fa-comment"></i>
             {comments.length} k
           </div>
           <div className="flex-1 flex items-center text-xs text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
-            <i class="fas fa-heart"></i>
+            <i className="fas fa-heart"></i>
             {likes.length} k
           </div>
         </div>

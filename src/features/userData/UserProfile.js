@@ -32,6 +32,9 @@ export const UserProfile = () => {
       dispatch(reload());
     }
   }, [userData.status, userData.userId, authData.userId, dispatch]);
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
   const [displayEditProfile, setDisplayEditProfile] = useState("none");
   const toggleDisplay = () => {

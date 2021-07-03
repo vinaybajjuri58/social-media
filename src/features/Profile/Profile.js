@@ -18,6 +18,9 @@ export const Profile = () => {
   const dispatch = useDispatch();
   const { userId } = useParams();
   useEffect(() => {
+    console.log(profileData);
+  }, [profileData]);
+  useEffect(() => {
     if (profileData.status === "idle") {
       dispatch(getUserData({ userId: userId }));
     }

@@ -33,7 +33,7 @@ export const Login = () => {
         <div className="relative mt-4 bg-white shadow-md sm:rounded-lg text-left">
           <div className="h-2 bg-indigo-400 rounded-t-md"></div>
           <div className="py-6 px-8">
-            <label class="block font-semibold">Email</label>
+            <label className="block font-semibold">Email</label>
             <input
               className=" border w-full h-5 px-3 py-5 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-md"
               type="text"
@@ -50,7 +50,7 @@ export const Login = () => {
               name="password"
             />
             <button
-              class="mt-4 mr-5 bg-indigo-500  text-white py-2 px-6 rounded-lg"
+              className="mt-4 mr-5 bg-indigo-500  text-white py-2 px-6 rounded-lg"
               onClick={() => {
                 toast.info("LogginIn !!");
                 dispatch(

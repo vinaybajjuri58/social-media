@@ -1,8 +1,19 @@
+import { useState } from "react";
+import { FollowersModal } from "./FollowersModal";
+import { FollowingModal } from "./FollowingModal";
 export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
+  const [followersModalDisplay, setFollowersModalDisplay] = useState(false);
+  const [followingModalDisplay, setFollowingModalDisplay] = useState(false);
   const dummyAvatar =
     "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
   const dummyBackground =
     "https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg";
+  const toggleFollowersModalDisplay = () => {
+    setFollowersModalDisplay((initialState) => !initialState);
+  };
+  const toggleFollowingModalDisplay = () => {
+    setFollowingModalDisplay((initialState) => !initialState);
+  };
   return (
     <div>
       <div
@@ -84,25 +95,41 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
           <div className=" pt-3 flex justify-start items-start w-full divide-x divide-gray-800 divide-solid">
             <div className="text-center pr-3">
               <span className="font-bold text-black">
-                {userData.following.length}
+                {userData.following.length}{" "}
               </span>
-              <span className="text-gray-600"> Following</span>
+              <span className="text-gray-600">
+                <button onClick={toggleFollowingModalDisplay}>
+                  {" "}
+                  Following
+                </button>
+              </span>
             </div>
+            {followingModalDisplay && (
+              <FollowingModal
+                displayState={followingModalDisplay}
+                toggleDisplay={toggleFollowingModalDisplay}
+              />
+            )}
             <div className="text-center px-3">
               <span className="font-bold text-black">
                 {userData.followers.length}{" "}
               </span>
-              <span className="text-gray-600"> Followers</span>
+              <span className="text-gray-600">
+                <button onClick={toggleFollowersModalDisplay}>
+                  {" "}
+                  Followers
+                </button>
+              </span>
             </div>
+            {followersModalDisplay && (
+              <FollowersModal
+                displayState={followersModalDisplay}
+                toggleDisplay={toggleFollowersModalDisplay}
+              />
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
-/* <img
-className="opacity-0 w-full h-full"
-src="https://pbs.twimg.com/profile_banners/2161323234/1585151401/600x200"
-alt="Hello World"
-/> */
