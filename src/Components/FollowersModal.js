@@ -1,7 +1,8 @@
+import { Link } from "react-router-dom";
 export const FollowersModal = ({ followers, displayState, toggleDisplay }) => {
   return (
     <div
-      className="rounded-lg shadow-lg max-h-96 bg-gray-100 modal mt-20 ml-80 z-10  md:mt-16 md:w-1/3 p-0"
+      className="rounded-lg shadow-lg max-h-96 bg-gray-100 modal mt-6 z-10 w-full  md:mt-20 md:ml-80 md:w-1/3 p-0"
       id="modal"
       style={{
         display: displayState ? "block" : "none",
@@ -16,7 +17,7 @@ export const FollowersModal = ({ followers, displayState, toggleDisplay }) => {
         {followers.length > 0 ? (
           <div className="relative p-4 pl-20 w-full border-gray-0">
             {followers.map((follower) => (
-              <UserDisplay user={follower} />
+              <UserDisplay key={follower.id} user={follower} />
             ))}
           </div>
         ) : (
@@ -32,11 +33,13 @@ export const FollowersModal = ({ followers, displayState, toggleDisplay }) => {
 const UserDisplay = ({ user }) => {
   return (
     <div className="flex">
-      <img src={user.userImage} alt={user.userName} />
-      <div className="flex flex-col">
-        <p>{user.name}</p>
-        <p>@{user.userName}</p>
-      </div>
+      <Link to={`/profile/${user.id}`} className="flex-shrink-0 group block">
+        <img src={user.userImage} alt={user.userName} />
+        <div className="flex flex-col">
+          <p>{user.name}</p>
+          <p>@{user.userName}</p>
+        </div>
+      </Link>
       <button className="border-blue-300 text-gray-50 bg-blue-300">
         Following
       </button>

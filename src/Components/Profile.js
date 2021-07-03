@@ -1,9 +1,11 @@
 import { useState } from "react";
+// import { useSelector } from "react-redux";
 import { FollowersModal } from "./FollowersModal";
 import { FollowingModal } from "./FollowingModal";
 export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
   const [followersModalDisplay, setFollowersModalDisplay] = useState(false);
   const [followingModalDisplay, setFollowingModalDisplay] = useState(false);
+  // const { userId } = useSelector((store) => store.userData);
   const dummyAvatar =
     "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
   const dummyBackground =
@@ -20,11 +22,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
         className="w-full bg-cover bg-no-repeat bg-center"
         style={{
           height: "200px",
-          backgroundImage:
-            userData.coverImage === undefined &&
-            userData.coverImage.length === 0
-              ? `url(${dummyBackground})`
-              : `url(${userData.coverImage})`,
+          backgroundImage: `url(${dummyBackground})`,
         }}
       ></div>
       <div className="p-4">
@@ -65,6 +63,19 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
                     "
               >
                 Edit Profile
+              </button>
+            </div>
+          )}
+          {!userProfile && (
+            <div className="flex flex-col text-right">
+              <button
+                onClick={toggleDisplay}
+                className="  justify-center  max-h-max  whitespace-nowrap  focus:outline-none focus:ring  max-w-max  border  bg-transparent
+                      border-blue-500  text-blue-500  hover:border-blue-800  flex  items-center  hover:shadow-lg  font-bold  py-2  px-4  rounded-full
+                      mr-0  ml-auto
+                    "
+              >
+                Follow
               </button>
             </div>
           )}
@@ -136,3 +147,8 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
     </div>
   );
 };
+
+// userData.coverImage === undefined &&
+// userData.coverImage.length === 0
+//   ? `url(${dummyBackground})`
+//   : `url(${userData.coverImage})`,
