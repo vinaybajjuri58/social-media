@@ -2,6 +2,35 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { newPostAdded } from "../userData/userSlice";
 import axios from "axios";
 
+export const likePost = createAsyncThunk(
+  "api/likePost",
+  async ({ userToken, postId, userId }) => {
+    const response = await axios.post(
+      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    return { data: response.data, userId, postId };
+  }
+);
+export const dislikePost = createAsyncThunk(
+  "api/dislikePost",
+  async ({ userToken, postId, userId }) => {
+    const response = await axios.delete(
+      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    return { data: response.data, userId, postId };
+  }
+);
+
 export const addPost = createAsyncThunk(
   "appi/addPost",
   async (
@@ -90,6 +119,38 @@ export const postSlice = createSlice({
     [addPost.rejected]: (state) => {
       state.errorMessage = "Error in adding post";
       state.apiCallStatus = "error";
+    },
+    [likePost.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [likePost.rejected]: (state) => {
+      state.apiCallStatus = "error";
+    },
+    [likePost.fulfilled]: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.postId === action.payload.postId) {
+          return {
+            ...post,
+            likes: post.likes.push(action.payload.userId),
+          };
+        } else return post;
+      });
+    },
+    [dislikePost.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [dislikePost.rejected]: (state) => {
+      state.apiCallStatus = "error";
+    },
+    [dislikePost.fulfilled]: (state, action) => {
+      state.posts = state.posts.map((post) => {
+        if (post.postId === action.payload.postId) {
+          return {
+            ...post,
+            likes: post.likes.pull(action.payload.userId),
+          };
+        } else return post;
+      });
     },
   },
 });
