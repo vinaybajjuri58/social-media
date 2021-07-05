@@ -4,6 +4,19 @@ import { FollowersModal } from "./FollowersModal";
 import { FollowingModal } from "./FollowingModal";
 import { unFollowUserAPI, followUserAPI } from "../features/userData/userSlice";
 
+import { css } from "@emotion/react";
+import BeatLoader from "react-spinners/BeatLoader";
+const override = css`
+  display: block;
+  margin: auto 2px;
+  position: absolute;
+  top: 160px;
+  left: 260px;
+  align-self: center;
+  border-color: blue;
+`;
+const color = "blue";
+
 const dummyAvatar =
   "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
 const dummyBackground =
@@ -13,9 +26,8 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
   const [followersModalDisplay, setFollowersModalDisplay] = useState(false);
   const [followingModalDisplay, setFollowingModalDisplay] = useState(false);
   const { userToken } = useSelector((store) => store.authData);
-  const { name, userName, userImage, userId, following } = useSelector(
-    (store) => store.userData
-  );
+  const { name, userName, userImage, userId, following, apiCallStatus } =
+    useSelector((store) => store.userData);
   const dispatch = useDispatch();
   const toggleFollowersModalDisplay = () => {
     setFollowersModalDisplay((initialState) => !initialState);
@@ -38,6 +50,14 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
       <div className="p-4">
         <div className="relative flex w-full">
           <div className="flex flex-1">
+            {apiCallStatus === "loading" && (
+              <BeatLoader
+                color={color}
+                loading={apiCallStatus}
+                css={override}
+                size={15}
+              />
+            )}
             <div style={{ marginTop: "-6rem" }}>
               <div
                 style={{ height: "9rem", width: "9rem" }}

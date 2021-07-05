@@ -168,6 +168,16 @@ export const userSlice = createSlice({
     [followUserAPI.fulfilled]: (state, action) => {
       state.apiCallStatus = "success";
     },
+    [unFollowUserAPI.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [unFollowUserAPI.rejected]: (state) => {
+      state.apiCallStatus = "error";
+      state.errMessage = "request failed";
+    },
+    [unFollowUserAPI.fulfilled]: (state) => {
+      state.apiCallStatus = "success";
+    },
   },
 });
 export const {
