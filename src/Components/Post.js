@@ -36,20 +36,22 @@ export const Post = ({ postData }) => {
           </div>
         </Link>
       </div>
-
-      <div className="pl-16">
-        <p className=" text-base  width-auto  font-medium  text-black  flex-shrink">
-          {message}
-        </p>
-
-        <div className="flex items-center py-4">
-          <div className="flex-1 flex items-center text-xs text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
+      <Link to={`/posts/${postId}`}>
+        <div className="pl-16">
+          <p className=" text-base  width-auto  font-medium  text-black  flex-shrink">
+            {message}
+          </p>
+        </div>
+      </Link>
+      <div>
+        <div className="flex items-center py-4 justify-evenly ">
+          <div className=" flex items-center  p-1 m-1 text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
             <i className="fas fa-comment"></i>
-            {comments.length} k
+            <span>{comments.length > 0 ? comments.length : ""} </span>
           </div>
-          <div className="flex-1 flex items-center text-xs text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
+          <div className=" flex items-center text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
             <i className="fas fa-heart"></i>
-            {likes.length} k
+            <span>{likes.length > 0 ? likes.length : ""} </span>
           </div>
         </div>
       </div>
