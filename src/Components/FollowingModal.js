@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { UserDisplay } from "./UserDisplay";
 export const FollowingModal = ({ following, displayState, toggleDisplay }) => {
   return (
     <div
@@ -26,23 +26,6 @@ export const FollowingModal = ({ following, displayState, toggleDisplay }) => {
           </div>
         )}
       </div>
-    </div>
-  );
-};
-
-const UserDisplay = ({ user }) => {
-  return (
-    <div className="flex">
-      <Link to={`/profile/${user.id}`} className="flex-shrink-0 group block">
-        <img src={user.userImage} alt={user.userName} />
-        <div className="flex flex-col">
-          <p>{user.name}</p>
-          <p>@{user.userName}</p>
-        </div>
-      </Link>
-      <button className="border-blue-300 text-gray-50 bg-blue-300">
-        Following
-      </button>
     </div>
   );
 };

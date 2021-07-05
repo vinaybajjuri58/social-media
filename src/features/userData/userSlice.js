@@ -1,5 +1,24 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const followUserAPI = createAsyncThunk(
+  "api/followUser",
+  async ({ userToken, userId }) => {
+    const response = await axios.post(
+      "https://fin-twitter-backend.herokuapp.com/api/users/follow",
+      {
+        userBId: userId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
 export const getUserDataAPI = createAsyncThunk(
   "api/getUserData",
   async ({ userToken }) => {
@@ -19,6 +38,7 @@ export const userSlice = createSlice({
   initialState: {
     status: "idle",
     errMessage: "",
+    apiCallStatus: "idle",
     userId: "",
     posts: [],
     followers: [],
