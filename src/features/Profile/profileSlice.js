@@ -13,6 +13,7 @@ export const profileSlice = createSlice({
   name: "Profile data",
   initialState: {
     status: "idle",
+    userId: "",
     errMessage: "",
     posts: [],
     followers: [],
@@ -27,6 +28,22 @@ export const profileSlice = createSlice({
   reducers: {
     resetStatus: (state) => {
       state.status = "idle";
+    },
+    newFollowerAdded: (state, action) => {
+      const { payload: userADetails } = action;
+      state.followers.push({
+        _id: userADetails.id,
+        id: userADetails.id,
+        name: userADetails.name,
+        userName: userADetails.userName,
+        userImage: userADetails.userImage,
+      });
+    },
+    removeFollower: (state, action) => {
+      const { payload } = action;
+      state.followers = state.followers.filter(
+        (user) => user.id !== payload.userId
+      );
     },
   },
   extraReducers: {
@@ -71,5 +88,6 @@ export const profileSlice = createSlice({
     },
   },
 });
-export const { resetStatus } = profileSlice.actions;
+export const { resetStatus, newFollowerAdded, removeFollower } =
+  profileSlice.actions;
 export default profileSlice.reducer;

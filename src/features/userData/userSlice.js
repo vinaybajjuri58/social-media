@@ -1,13 +1,14 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { removeFollower, newFollowerAdded } from "../Profile/profileSlice";
 
 export const followUserAPI = createAsyncThunk(
   "api/followUser",
-  async ({ userToken, userId }) => {
+  async ({ userToken, userBId, userADetails }, { dispatch }) => {
     const response = await axios.post(
       "https://fin-twitter-backend.herokuapp.com/api/users/follow",
       {
-        userBId: userId,
+        userBId,
       },
       {
         headers: {
@@ -15,6 +16,32 @@ export const followUserAPI = createAsyncThunk(
         },
       }
     );
+    if (response.data.success === true) {
+      dispatch(followButtonPressed({ data: response.data }));
+      dispatch(newFollowerAdded({ userADetails }));
+    }
+    return response.data;
+  }
+);
+
+export const unFollowUserAPI = createAsyncThunk(
+  "api/unFollowUser",
+  async ({ userToken, userBId, userId }, { dispatch }) => {
+    const response = await axios.delete(
+      "https://fin-twitter-backend.herokuapp.com/api/users/follow",
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+        data: {
+          userBId: userBId,
+        },
+      }
+    );
+    if (response.data.success === true) {
+      dispatch(unFollowButtonPressed({ userBId }));
+      dispatch(removeFollower({ userId }));
+    }
     return response.data;
   }
 );
@@ -53,6 +80,28 @@ export const userSlice = createSlice({
     coverImage: "",
   },
   reducers: {
+    unFollowButtonPressed: (state, action) => {
+      const {
+        payload: { userBId },
+      } = action;
+      state.following = state.following.filter(
+        (follower) => follower.id !== userBId
+      );
+    },
+    followButtonPressed: (state, action) => {
+      const {
+        payload: {
+          data: { followerData },
+        },
+      } = action;
+      state.following.push({
+        _id: followerData.id,
+        name: followerData.name,
+        userName: followerData.userName,
+        id: followerData.id,
+        userImage: followerData.userImage,
+      });
+    },
     newPostAdded: (state, action) => {
       state.posts.unshift(action.payload);
     },
@@ -64,6 +113,10 @@ export const userSlice = createSlice({
       state.bio = action.payload.bio;
       state.userImage = action.payload.profileImage;
       state.coverImage = action.payload.coverImage;
+    },
+    apiStatusReload: (state) => {
+      state.apiCallStatus = "idle";
+      state.errMessage = "";
     },
   },
   extraReducers: {
@@ -105,7 +158,23 @@ export const userSlice = createSlice({
       state.coverImage = coverImage;
       state.userImage = userImage;
     },
+    [followUserAPI.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [followUserAPI.rejected]: (state) => {
+      state.apiCallStatus = "error";
+      state.errMessage = "request failed";
+    },
+    [followUserAPI.fulfilled]: (state, action) => {
+      state.apiCallStatus = "success";
+    },
   },
 });
-export const { newPostAdded, reload, profileDataUpdated } = userSlice.actions;
+export const {
+  newPostAdded,
+  reload,
+  unFollowButtonPressed,
+  followButtonPressed,
+  profileDataUpdated,
+} = userSlice.actions;
 export default userSlice.reducer;

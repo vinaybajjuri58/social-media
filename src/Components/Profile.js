@@ -1,21 +1,31 @@
 import { useState } from "react";
-// import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FollowersModal } from "./FollowersModal";
 import { FollowingModal } from "./FollowingModal";
+import { unFollowUserAPI, followUserAPI } from "../features/userData/userSlice";
+
+const dummyAvatar =
+  "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
+const dummyBackground =
+  "https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg";
+
 export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
   const [followersModalDisplay, setFollowersModalDisplay] = useState(false);
   const [followingModalDisplay, setFollowingModalDisplay] = useState(false);
-  // const { userId } = useSelector((store) => store.userData);
-  const dummyAvatar =
-    "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
-  const dummyBackground =
-    "https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569__480.jpg";
+  const { userToken } = useSelector((store) => store.authData);
+  const { name, userName, userImage, userId, following } = useSelector(
+    (store) => store.userData
+  );
+  const dispatch = useDispatch();
   const toggleFollowersModalDisplay = () => {
     setFollowersModalDisplay((initialState) => !initialState);
   };
   const toggleFollowingModalDisplay = () => {
     setFollowingModalDisplay((initialState) => !initialState);
   };
+
+  const inFollowing = following.find((userB) => userB.id === userData.userId);
+
   return (
     <div>
       <div
@@ -67,16 +77,40 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
             </div>
           )}
           {!userProfile && (
-            <div className="flex flex-col text-right">
-              <button
-                onClick={toggleDisplay}
-                className="  justify-center  max-h-max  whitespace-nowrap  focus:outline-none focus:ring  max-w-max  border  bg-transparent
-                      border-blue-500  text-blue-500  hover:border-blue-800  flex  items-center  hover:shadow-lg  font-bold  py-2  px-4  rounded-full
-                      mr-0  ml-auto
-                    "
-              >
-                Follow
-              </button>
+            <div>
+              {inFollowing === undefined ? (
+                <button
+                  onClick={() =>
+                    dispatch(
+                      followUserAPI({
+                        userToken,
+                        userBId: userData.userId,
+                        userADetails: { name, userName, userImage, id: userId },
+                      })
+                    )
+                  }
+                  className="max-w-max  border  bg-transparent
+                     border-blue-500  text-blue-500  font-bold  py-2  px-4  rounded-full"
+                >
+                  Follow
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    dispatch(
+                      unFollowUserAPI({
+                        userToken,
+                        userBId: userData.userId,
+                        userId,
+                      })
+                    )
+                  }
+                  className="max-w-max  border  bg-transparent
+    border-blue-500  bg-blue-500 text-white   font-bold  py-2  px-4  rounded-full"
+                >
+                  Following
+                </button>
+              )}
             </div>
           )}
         </div>
