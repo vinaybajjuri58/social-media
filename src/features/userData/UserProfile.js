@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EditProfile } from "./EditProfile";
-import { getUserDataAPI, reload } from "./userSlice";
+import { getUserDataAPI } from "./userSlice";
 import { ProfileComponent, Post } from "../../Components";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -23,7 +23,6 @@ export const UserProfile = () => {
     }
     if (userData.status === "error") {
       toast.error("Error in loading user data");
-      dispatch(reload());
     }
   }, [authData.userToken, dispatch, userData.status]);
 
