@@ -1,5 +1,42 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { newPostAdded } from "../userData/userSlice";
 import axios from "axios";
+
+export const addPost = createAsyncThunk(
+  "appi/addPost",
+  async (
+    { userToken, userId, userImage, userName, name, message },
+    { dispatch }
+  ) => {
+    const response = await axios.post(
+      "https://fin-twitter-backend.herokuapp.com/api/posts/",
+      {
+        message,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    if (response.data.success === true) {
+      dispatch(
+        newPostAdded({
+          userId,
+          userImage,
+          name,
+          userName,
+          postId: response.data.savedPost._id,
+          message: response.data.savedPost.message,
+          likes: [],
+          comments: [],
+        })
+      );
+    }
+    return { data: response.data, userId, userImage, name, userName };
+  }
+);
+
 export const getPosts = createAsyncThunk("api/getPostsData", async () => {
   const response = await axios.get(
     "https://fin-twitter-backend.herokuapp.com/api/posts"
@@ -11,11 +48,14 @@ export const postSlice = createSlice({
   initialState: {
     status: "idle",
     errorMessage: "",
+    apiCallStatus: "idle",
+    apiCallErrorMessage: "request failed",
     posts: [],
   },
   reducers: {
-    addPostButtonClicked: (state, action) => {
-      state.posts.unshift(action.payload);
+    apiCallStatusToInitialState: (state) => {
+      state.apiCallStatus = "idle";
+      state.apiCallErrorMessage = "";
     },
   },
   extraReducers: {
@@ -23,14 +63,35 @@ export const postSlice = createSlice({
       state.status = "loading";
     },
     [getPosts.rejected]: (state) => {
-      state.status = "error";
       state.errorMessage = "Failed to load posts reload the page";
+      state.status = "error";
     },
     [getPosts.fulfilled]: (state, action) => {
       state.status = "success";
       state.posts = action.payload.posts;
     },
+    [addPost.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [addPost.fulfilled]: (state, action) => {
+      state.apiCallStatus = "success";
+      const { userId, userImage, name, userName, data } = action.payload;
+      state.posts.unshift({
+        userId,
+        userImage,
+        name,
+        userName,
+        postId: data.savedPost._id,
+        message: data.savedPost.message,
+        likes: [],
+        comments: [],
+      });
+    },
+    [addPost.rejected]: (state) => {
+      state.errorMessage = "Error in adding post";
+      state.apiCallStatus = "error";
+    },
   },
 });
-export const { addPostButtonClicked } = postSlice.actions;
+export const { apiCallStatusToInitialState } = postSlice.actions;
 export default postSlice.reducer;
