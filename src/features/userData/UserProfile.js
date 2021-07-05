@@ -19,7 +19,7 @@ export const UserProfile = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (userData.status === "idle") {
-      dispatch(getUserDataAPI({ token: authData.userToken }));
+      dispatch(getUserDataAPI({ userToken: authData.userToken }));
     }
     if (userData.status === "error") {
       toast.error("Error in loading user data");

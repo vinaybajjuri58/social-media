@@ -2,12 +2,12 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const getUserDataAPI = createAsyncThunk(
   "api/getUserData",
-  async ({ token }) => {
+  async ({ userToken }) => {
     const response = await axios.get(
       "https://fin-twitter-backend.herokuapp.com/api/users/",
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${userToken}`,
         },
       }
     );
