@@ -5,7 +5,7 @@ import axios from "axios";
 export const likePost = createAsyncThunk(
   "api/likePost",
   async ({ userToken, postId, userId }) => {
-    const response = await axios.get(
+    const response = await axios.post(
       `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
       {
         headers: {
