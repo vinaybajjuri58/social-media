@@ -2,6 +2,16 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { newPostAdded } from "../userData/userSlice";
 import axios from "axios";
 
+export const getSinglePost = createAsyncThunk(
+  "api/getSinglePost",
+  async ({ postId }) => {
+    const response = await axios.get(
+      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}`
+    );
+    return response.data;
+  }
+);
+
 export const likePost = createAsyncThunk(
   "api/likePost",
   async ({ userToken, postId, userId }) => {
@@ -15,6 +25,7 @@ export const likePost = createAsyncThunk(
     return { data: response.data, userId, postId };
   }
 );
+
 export const dislikePost = createAsyncThunk(
   "api/dislikePost",
   async ({ userToken, postId, userId }) => {
@@ -79,14 +90,25 @@ export const postSlice = createSlice({
     apiCallStatus: "idle",
     apiCallErrorMessage: "request failed",
     posts: [],
+    singlePost: null,
   },
   reducers: {
     apiCallStatusToInitialState: (state) => {
       state.apiCallStatus = "idle";
       state.apiCallErrorMessage = "";
     },
+    resetSinglePost: (state) => {
+      state.singlePost = null;
+    },
   },
   extraReducers: {
+    [getSinglePost.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [getSinglePost.fulfilled]: (state, action) => {
+      state.apiCallStatus = "success";
+      state.singlePost = action.payload.postData;
+    },
     [getPosts.pending]: (state) => {
       state.status = "loading";
     },
@@ -131,6 +153,9 @@ export const postSlice = createSlice({
         (post) => post.postId === action.payload.postId
       );
       state.posts[postIndex].likes.push(action.payload.userId);
+      if (state.singlePost._id === action.payload.postId) {
+        state.singlePost.likes.push(action.payload.userId);
+      }
     },
     [dislikePost.pending]: (state) => {
       state.apiCallStatus = "loading";
@@ -147,8 +172,14 @@ export const postSlice = createSlice({
       state.posts[postIndex].likes = state.posts[postIndex].likes.filter(
         (likedUser) => likedUser !== action.payload.userId
       );
+      if (state.singlePost._id === action.payload.postId) {
+        state.singlePost.likes = state.singlePost.likes.filter(
+          (user) => user !== action.payload.userId
+        );
+      }
     },
   },
 });
-export const { apiCallStatusToInitialState } = postSlice.actions;
+export const { apiCallStatusToInitialState, resetSinglePost } =
+  postSlice.actions;
 export default postSlice.reducer;
