@@ -9,7 +9,7 @@ export const likePost = createAsyncThunk(
       `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
       {
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          authorization: `Bearer ${userToken}`,
         },
       }
     );
