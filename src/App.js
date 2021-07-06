@@ -4,7 +4,8 @@ import { Navbar, TopNavBar } from "./Components";
 import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { reload } from "./features/userData/userSlice";
+// import { logoutButtonPressed } from "./features/authData/authSlice";
+import { reload, getUserDataAPI } from "./features/userData/userSlice";
 function App() {
   const authData = useSelector((store) => store.authData);
   const userData = useSelector((store) => store.userData);
@@ -13,6 +14,26 @@ function App() {
     setDisplaySidebar((state) => !state);
   };
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   (() => {
+  //     if (
+  //       localStorage?.getItem("login") !== null &&
+  //       Number(new Date().getTime()) <
+  //         Number(JSON.parse(localStorage?.getItem("login")).expiryTime)
+  //     ) {
+  //       console.log(new Date().getTime());
+  //       console.log(JSON.parse(localStorage?.getItem("login")).expiryTime);
+  //       dispatch(logoutButtonPressed());
+  //     }
+  //   })();
+  // }, [dispatch]);
+
+  useEffect(() => {
+    if (userData.status === "idle") {
+      dispatch(getUserDataAPI({ userToken: authData.userToken }));
+    }
+  }, [authData.userToken, dispatch, userData.status]);
+
   useEffect(() => {
     if (userData.status === "success" && userData.userId !== authData.userId) {
       dispatch(reload());

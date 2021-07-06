@@ -30,7 +30,15 @@ export const authSlice = createSlice({
     isLoggedIn: initialAuthData.isLoggedIn,
     userToken: initialAuthData.userToken,
   },
-  reducers: {},
+  reducers: {
+    logoutButtonPressed: (state) => {
+      state.state = "idle";
+      state.isLoggedIn = false;
+      state.userToken = null;
+      state.userId = "";
+      localStorage?.removeItem("login");
+    },
+  },
   extraReducers: {
     [loginAPICall.pending]: (state) => {
       state.status = "loading";
@@ -43,6 +51,7 @@ export const authSlice = createSlice({
           isLoggedIn: true,
           userToken: action.payload.token,
           userId: action.payload.userId,
+          expiryTime: new Date().getTime() + 86400000,
         })
       );
       state.isLoggedIn = true;
@@ -55,4 +64,5 @@ export const authSlice = createSlice({
     },
   },
 });
+export const { logoutButtonPressed } = authSlice.actions;
 export default authSlice.reducer;

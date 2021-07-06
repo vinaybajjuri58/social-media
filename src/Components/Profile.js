@@ -26,8 +26,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
   const [followersModalDisplay, setFollowersModalDisplay] = useState(false);
   const [followingModalDisplay, setFollowingModalDisplay] = useState(false);
   const { userToken, userId: userAId } = useSelector((store) => store.authData);
-  const { name, userName, userImage, userId, following, apiCallStatus } =
-    useSelector((store) => store.userData);
+  const { apiCallStatus } = useSelector((store) => store.userData);
   const dispatch = useDispatch();
   const toggleFollowersModalDisplay = () => {
     setFollowersModalDisplay((initialState) => !initialState);
@@ -36,9 +35,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
     setFollowingModalDisplay((initialState) => !initialState);
   };
 
-  const inFollowing = following.find((userB) =>
-    userB.id === userProfile ? userData.userId : userAId
-  );
+  const inFollowing = userData.followers.find((userB) => userB.id === userAId);
 
   return (
     <div>
@@ -107,7 +104,6 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
                       followUserAPI({
                         userToken,
                         userBId: userData.userId,
-                        userADetails: { name, userName, userImage, id: userId },
                       })
                     )
                   }
@@ -123,7 +119,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
                       unFollowUserAPI({
                         userToken,
                         userBId: userData.userId,
-                        userId,
+                        userId: userAId,
                       })
                     )
                   }

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-export const getUserData = createAsyncThunk(
-  "api/getUserData",
+export const getProfileData = createAsyncThunk(
+  "api/getProfileData",
   async ({ userId }) => {
     const response = await axios.get(
       `https://fin-twitter-backend.herokuapp.com/api/users/${userId}`
@@ -30,31 +30,37 @@ export const profileSlice = createSlice({
       state.status = "idle";
     },
     newFollowerAdded: (state, action) => {
-      const { payload: userADetails } = action;
-      state.followers.push({
-        _id: userADetails.id,
-        id: userADetails.id,
-        name: userADetails.name,
-        userName: userADetails.userName,
-        userImage: userADetails.userImage,
-      });
+      const {
+        payload: { userBId, userADetails },
+      } = action;
+      if (userBId === state.userId) {
+        state.followers.push({
+          _id: userADetails.id,
+          id: userADetails.id,
+          name: userADetails.name,
+          userName: userADetails.userName,
+          userImage: userADetails.userImage,
+        });
+      }
     },
     removeFollower: (state, action) => {
       const { payload } = action;
-      state.followers = state.followers.filter(
-        (user) => user.id !== payload.userId
-      );
+      if (payload.userBId === state.userId) {
+        state.followers = state.followers.filter(
+          (user) => user.id !== payload.userId
+        );
+      }
     },
   },
   extraReducers: {
-    [getUserData.pending]: (state) => {
+    [getProfileData.pending]: (state) => {
       state.status = "loading";
     },
-    [getUserData.rejected]: (state) => {
+    [getProfileData.rejected]: (state) => {
       state.status = "error";
       state.errMessage = "Error in Loading UserData";
     },
-    [getUserData.fulfilled]: (state, action) => {
+    [getProfileData.fulfilled]: (state, action) => {
       state.status = "success";
       const {
         id,

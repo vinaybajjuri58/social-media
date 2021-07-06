@@ -5,9 +5,7 @@ export const UserDisplay = ({ user }) => {
   const dummyUserImage =
     "https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png";
   const dispatch = useDispatch();
-  const { following, name, userName, userImage } = useSelector(
-    (store) => store.userData
-  );
+  const { following } = useSelector((store) => store.userData);
   const { userToken, userId } = useSelector((store) => store.authData);
   const inFollowing = following.find((userB) => userB.id === user.id);
   return (
@@ -33,7 +31,6 @@ export const UserDisplay = ({ user }) => {
               followUserAPI({
                 userToken,
                 userBId: user.id,
-                userADetails: { name, userName, userImage, id: userId },
               })
             )
           }

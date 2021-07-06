@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserData, resetStatus } from "./profileSlice";
+import { getProfileData, resetStatus } from "./profileSlice";
 import { ProfileComponent } from "../../Components";
 import { Posts } from "../posts/Posts";
 import { useParams } from "react-router-dom";
@@ -20,7 +20,7 @@ export const Profile = () => {
   const { userId } = useParams();
   useEffect(() => {
     if (profileData.status === "idle") {
-      dispatch(getUserData({ userId: userId }));
+      dispatch(getProfileData({ userId: userId }));
     }
   }, [profileData.status, dispatch, userId]);
   useEffect(() => {

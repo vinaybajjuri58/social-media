@@ -4,7 +4,10 @@ import { removeFollower, newFollowerAdded } from "../Profile/profileSlice";
 
 export const followUserAPI = createAsyncThunk(
   "api/followUser",
-  async ({ userToken, userBId, userADetails }, { dispatch }) => {
+  async ({ userToken, userBId, userADetails }, { dispatch, getState }) => {
+    const {
+      userData: { name, userName, userId, userImage },
+    } = getState();
     const response = await axios.post(
       "https://fin-twitter-backend.herokuapp.com/api/users/follow",
       {
@@ -18,7 +21,12 @@ export const followUserAPI = createAsyncThunk(
     );
     if (response.data.success === true) {
       dispatch(followButtonPressed({ data: response.data }));
-      dispatch(newFollowerAdded({ userADetails }));
+      dispatch(
+        newFollowerAdded({
+          userBId,
+          userADetails: { name, userName, userImage, id: userId },
+        })
+      );
     }
     return response.data;
   }
@@ -40,7 +48,7 @@ export const unFollowUserAPI = createAsyncThunk(
     );
     if (response.data.success === true) {
       dispatch(unFollowButtonPressed({ userBId }));
-      dispatch(removeFollower({ userId }));
+      dispatch(removeFollower({ userBId, userId }));
     }
     return response.data;
   }
@@ -165,7 +173,7 @@ export const userSlice = createSlice({
       state.apiCallStatus = "error";
       state.errMessage = "request failed";
     },
-    [followUserAPI.fulfilled]: (state, action) => {
+    [followUserAPI.fulfilled]: (state) => {
       state.apiCallStatus = "success";
     },
     [unFollowUserAPI.pending]: (state) => {

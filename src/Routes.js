@@ -12,8 +12,8 @@ export const RoutesComponent = () => {
       <PrivateRoute path="/notifications" element={<Notifications />} />
       <PrivateRoute path="/posts" element={<Posts />} />
       <PrivateRoute path="/posts/:postId" element={<SinglePost />} />
-      <PrivateRoute path="/profile" element={<UserProfile />} />
       <PrivateRoute path="/profile/:userId" element={<Profile />} />
+      <PrivateRoute path="/profile" element={<UserProfile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
       <PrivateRoute path="*" element={<Posts />} />
