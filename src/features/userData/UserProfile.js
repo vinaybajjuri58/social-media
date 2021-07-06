@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EditProfile } from "./EditProfile";
 import { getUserDataAPI } from "./userSlice";
-import { ProfileComponent, Post } from "../../Components";
+import { ProfileComponent } from "../../Components";
+import { Posts } from "../posts/Posts";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
 import { toast } from "react-toastify";
@@ -44,8 +45,8 @@ export const UserProfile = () => {
         <div>
           <hr className="border-gray-800" />
           <ProfileComponent
+            userProfile={true}
             userData={userData}
-            userProfile
             toggleDisplay={toggleDisplay}
           />
           <EditProfile
@@ -53,9 +54,7 @@ export const UserProfile = () => {
             changeDisplayState={toggleDisplay}
           />
           <div>
-            {userData.posts.map((post) => (
-              <Post key={post.postId} postData={post} />
-            ))}
+            <Posts userId={userData.userId} />
           </div>
         </div>
       )}

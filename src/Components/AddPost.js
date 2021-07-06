@@ -1,23 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 import {
   addPost,
   apiCallStatusToInitialState,
 } from "../features/posts/postSlice";
 const dummyUserImage = "https://placekitten.com/g/50/50";
-const override = css`
-  display: block;
-  margin: auto 2px;
-  position: absolute;
-  top: 160px;
-  left: 260px;
-  align-self: center;
-  border-color: blue;
-`;
-const color = "blue";
 
 export const AddPost = () => {
   const authData = useSelector((store) => store.authData);
@@ -64,14 +52,6 @@ export const AddPost = () => {
   };
   return (
     <div className="rounded-lg shadow-lg bg-blue-50 z-0">
-      {apiCallStatus === "loading" && (
-        <BeatLoader
-          color={color}
-          loading={apiCallStatus}
-          css={override}
-          size={15}
-        />
-      )}
       <div className="relative p-4 pl-20 z-0">
         <img
           className="absolute top-0 left-0 ml-4 mt-4 rounded-full"

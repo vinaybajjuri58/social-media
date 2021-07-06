@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserData, resetStatus } from "./profileSlice";
-import { ProfileComponent, Post } from "../../Components";
+import { ProfileComponent } from "../../Components";
+import { Posts } from "../posts/Posts";
 import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
@@ -47,9 +48,19 @@ export const Profile = () => {
           <hr className="border-gray-800" />
           <ProfileComponent userData={profileData} />
           <div>
-            {profileData.posts.map((post) => (
-              <Post key={post.postId} postData={post} />
-            ))}
+            <div className="fixed mt-20 ml-20">
+              {profileData.apiCallStatus === "loading" && (
+                <BeatLoader
+                  color={color}
+                  loading={profileData.apiCallStatus}
+                  css={override}
+                  size={15}
+                />
+              )}
+            </div>
+            <div>
+              <Posts userId={profileData.userId} />
+            </div>
           </div>
         </div>
       )}

@@ -128,6 +128,7 @@ export const userSlice = createSlice({
       state.errMessage = "Error in Loading UserData";
     },
     [getUserDataAPI.fulfilled]: (state, action) => {
+      state.status = "success";
       const {
         id,
         posts,
@@ -143,7 +144,6 @@ export const userSlice = createSlice({
         coverImage,
         userImage,
       } = action.payload.userData;
-      state.status = "success";
       state.userId = id;
       state.posts = posts;
       state.likedPosts = likedPosts;

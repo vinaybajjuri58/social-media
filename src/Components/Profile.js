@@ -25,7 +25,7 @@ const dummyBackground =
 export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
   const [followersModalDisplay, setFollowersModalDisplay] = useState(false);
   const [followingModalDisplay, setFollowingModalDisplay] = useState(false);
-  const { userToken } = useSelector((store) => store.authData);
+  const { userToken, userId: userAId } = useSelector((store) => store.authData);
   const { name, userName, userImage, userId, following, apiCallStatus } =
     useSelector((store) => store.userData);
   const dispatch = useDispatch();
@@ -36,7 +36,9 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
     setFollowingModalDisplay((initialState) => !initialState);
   };
 
-  const inFollowing = following.find((userB) => userB.id === userData.userId);
+  const inFollowing = following.find((userB) =>
+    userB.id === userProfile ? userData.userId : userAId
+  );
 
   return (
     <div>

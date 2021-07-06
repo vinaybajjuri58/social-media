@@ -12,7 +12,7 @@ const override = css`
   border-color: blue;
 `;
 const color = "blue";
-export const Posts = () => {
+export const Posts = ({ userId }) => {
   const postsData = useSelector((store) => store.postsData);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,8 +26,22 @@ export const Posts = () => {
     }
   }, [dispatch, postsData.status]);
 
+  const posts = userId
+    ? postsData.posts.filter((post) => post.userId === userId)
+    : postsData.posts;
+
   return (
     <div className="w-full">
+      <div className="fixed mt-20 ml-20">
+        {postsData.apiCallStatus === "loading" && (
+          <BeatLoader
+            color={color}
+            loading={postsData.apiCallStatus}
+            css={override}
+            size={15}
+          />
+        )}
+      </div>
       {postsData.status === "loading" && (
         <BeatLoader
           color={color}
@@ -39,8 +53,8 @@ export const Posts = () => {
       )}
       {postsData.status === "success" && (
         <div>
-          <AddPost />
-          {postsData.posts.map((post) => (
+          {!userId && <AddPost />}
+          {posts.map((post) => (
             <Post key={post.postId} postData={post} />
           ))}
         </div>
