@@ -5,8 +5,8 @@ import axios from "axios";
 export const likePost = createAsyncThunk(
   "api/likePost",
   async ({ userToken, postId, userId }) => {
-    const response = await axios.post(
-      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}`,
+    const response = await axios.get(
+      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
       {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -20,10 +20,10 @@ export const dislikePost = createAsyncThunk(
   "api/dislikePost",
   async ({ userToken, postId, userId }) => {
     const response = await axios.delete(
-      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}`,
+      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
       {
         headers: {
-          Authorization: `Bearer ${userToken}`,
+          authorization: `Bearer ${userToken}`,
         },
       }
     );
@@ -123,18 +123,15 @@ export const postSlice = createSlice({
     [likePost.pending]: (state) => {
       state.apiCallStatus = "loading";
     },
-    [likePost.rejected]: (state) => {
+    [likePost.rejected]: (state, action) => {
       state.apiCallStatus = "error";
     },
     [likePost.fulfilled]: (state, action) => {
-      state.posts = state.posts.map((post) => {
-        if (post.postId === action.payload.postId) {
-          return {
-            ...post,
-            likes: post.likes.push(action.payload.userId),
-          };
-        } else return post;
-      });
+      state.apiCallStatus = "success";
+      const postIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload.postId
+      );
+      state.posts[postIndex].likes.push(action.payload.userId);
     },
     [dislikePost.pending]: (state) => {
       state.apiCallStatus = "loading";
@@ -143,14 +140,14 @@ export const postSlice = createSlice({
       state.apiCallStatus = "error";
     },
     [dislikePost.fulfilled]: (state, action) => {
-      state.posts = state.posts.map((post) => {
-        if (post.postId === action.payload.postId) {
-          return {
-            ...post,
-            likes: post.likes.pull(action.payload.userId),
-          };
-        } else return post;
-      });
+      state.apiCallStatus = "success";
+      state.apiCallStatus = "success";
+      const postIndex = state.posts.findIndex(
+        (post) => post.postId === action.payload.postId
+      );
+      state.posts[postIndex].likes = state.posts[postIndex].likes.filter(
+        (likedUser) => likedUser !== action.payload.userId
+      );
     },
   },
 });

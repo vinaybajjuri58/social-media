@@ -32,6 +32,7 @@ export const Posts = () => {
         <BeatLoader
           color={color}
           loading={postsData.status}
+          className="fixed top-1/2 left-1/2"
           css={override}
           size={15}
         />

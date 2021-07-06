@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { likePost, dislikePost } from "../features/posts/postSlice";
 export const Post = ({ postData }) => {
-  const { userId } = useSelector((store) => store.authData);
+  const { userId, userToken } = useSelector((store) => store.authData);
+  const dispatch = useDispatch();
   const { userImage, message, userName, name, postId, likes, comments } =
     postData;
   const dummyUserImage =
@@ -50,7 +52,23 @@ export const Post = ({ postData }) => {
             <span>{comments.length > 0 ? comments.length : ""} </span>
           </div>
           <div className=" flex items-center text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
-            <i className="fas fa-heart"></i>
+            {likes.includes(userId) ? (
+              <button
+                onClick={() =>
+                  dispatch(dislikePost({ userToken, postId, userId }))
+                }
+              >
+                <i className="fas fa-heart text-red-600"></i>
+              </button>
+            ) : (
+              <button
+                onClick={() =>
+                  dispatch(likePost({ userToken, postId, userId }))
+                }
+              >
+                <i className="fas fa-heart"></i>
+              </button>
+            )}
             <span>{likes.length > 0 ? likes.length : ""} </span>
           </div>
         </div>
