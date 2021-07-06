@@ -5,14 +5,13 @@ import axios from "axios";
 export const likePost = createAsyncThunk(
   "api/likePost",
   async ({ userToken, postId, userId }) => {
-    const response = await axios.post(
-      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
-      {
-        headers: {
-          authorization: `Bearer ${userToken}`,
-        },
-      }
-    );
+    const response = await axios({
+      method: "post",
+      url: `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
+      headers: {
+        authorization: `Bearer ${userToken}`,
+      },
+    });
     return { data: response.data, userId, postId };
   }
 );
@@ -123,7 +122,7 @@ export const postSlice = createSlice({
     [likePost.pending]: (state) => {
       state.apiCallStatus = "loading";
     },
-    [likePost.rejected]: (state, action) => {
+    [likePost.rejected]: (state) => {
       state.apiCallStatus = "error";
     },
     [likePost.fulfilled]: (state, action) => {
