@@ -152,8 +152,13 @@ export const postSlice = createSlice({
       const postIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postId
       );
-      state.posts[postIndex].likes.push(action.payload.userId);
-      if (state.singlePost._id === action.payload.postId) {
+      if (postIndex !== -1) {
+        state.posts[postIndex].likes.push(action.payload.userId);
+      }
+      if (
+        state.singlePost !== null &&
+        state.singlePost._id === action.payload.postId
+      ) {
         state.singlePost.likes.push(action.payload.userId);
       }
     },
@@ -169,10 +174,15 @@ export const postSlice = createSlice({
       const postIndex = state.posts.findIndex(
         (post) => post.postId === action.payload.postId
       );
-      state.posts[postIndex].likes = state.posts[postIndex].likes.filter(
-        (likedUser) => likedUser !== action.payload.userId
-      );
-      if (state.singlePost._id === action.payload.postId) {
+      if (postIndex !== -1) {
+        state.posts[postIndex].likes = state.posts[postIndex].likes.filter(
+          (likedUser) => likedUser !== action.payload.userId
+        );
+      }
+      if (
+        state.singlePost !== null &&
+        state.singlePost._id === action.payload.postId
+      ) {
         state.singlePost.likes = state.singlePost.likes.filter(
           (user) => user !== action.payload.userId
         );

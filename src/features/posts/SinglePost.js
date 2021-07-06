@@ -16,11 +16,10 @@ export const SinglePost = () => {
   const { postId } = useParams();
   const { singlePost, apiCallStatus } = useSelector((store) => store.postsData);
   useEffect(() => {
-    if (singlePost === null) {
+    if (singlePost === null || postId !== singlePost._id) {
       dispatch(getSinglePost({ postId }));
     }
   }, [dispatch, postId, singlePost]);
-
   return (
     <div>
       <div className="fixed mt-20 ml-20">
