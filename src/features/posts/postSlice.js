@@ -6,10 +6,10 @@ export const likePost = createAsyncThunk(
   "api/likePost",
   async ({ userToken, postId, userId }) => {
     const response = await axios({
-      method: "post",
+      method: "POST",
       url: `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
       headers: {
-        authorization: `Bearer ${userToken}`,
+        Authorization: `Bearer ${userToken}`,
       },
     });
     return { data: response.data, userId, postId };
@@ -22,7 +22,7 @@ export const dislikePost = createAsyncThunk(
       `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
       {
         headers: {
-          authorization: `Bearer ${userToken}`,
+          Authorization: `Bearer ${userToken}`,
         },
       }
     );
