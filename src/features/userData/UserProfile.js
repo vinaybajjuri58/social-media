@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EditProfile } from "./EditProfile";
-import { getUserDataAPI } from "./userSlice";
+import { getUserDataAPI, reload } from "./userSlice";
 import { ProfileComponent } from "../../Components";
 import { Posts } from "../posts/Posts";
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 const override = css`
   display: block;
   margin: 80px 80px;
@@ -23,7 +23,7 @@ export const UserProfile = () => {
       dispatch(getUserDataAPI({ userToken: authData.userToken }));
     }
     if (userData.status === "error") {
-      toast.error("Error in loading user data");
+      dispatch(reload());
     }
   }, [authData.userToken, dispatch, userData.status]);
 

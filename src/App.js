@@ -29,10 +29,10 @@ function App() {
   // }, [dispatch]);
 
   useEffect(() => {
-    if (userData.status === "idle") {
+    if (userData.status === "idle" && authData.isLoggedIn === "true") {
       dispatch(getUserDataAPI({ userToken: authData.userToken }));
     }
-  }, [authData.userToken, dispatch, userData.status]);
+  }, [authData.userToken, dispatch, userData.status, authData.isLoggedIn]);
 
   useEffect(() => {
     if (userData.status === "success" && userData.userId !== authData.userId) {
