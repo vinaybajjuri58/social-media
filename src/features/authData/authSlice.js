@@ -13,7 +13,7 @@ const getLoginDataWithExpiry = () => {
   }
   const parsedAuthData = JSON.parse(authData);
   const now = new Date();
-  if (now.getTime() > parsedAuthData.expiry) {
+  if (!parsedAuthData.expiry || now.getTime() > parsedAuthData.expiry) {
     localStorage.removeItem("login");
     return initialAuthData;
   }
