@@ -20,9 +20,11 @@ export const SinglePost = () => {
       dispatch(getSinglePost({ postId }));
     }
   }, [dispatch, postId, singlePost]);
-  if (singlePost !== null) {
-    console.log(singlePost.comments);
-  }
+  useEffect(() => {
+    if (singlePost !== null) {
+      console.log(singlePost);
+    }
+  }, [singlePost]);
   return (
     <div>
       <div className="fixed mt-20 ml-20">

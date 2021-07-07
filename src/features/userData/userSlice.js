@@ -4,10 +4,7 @@ import { removeFollower, newFollowerAdded } from "../Profile/profileSlice";
 
 export const followUserAPI = createAsyncThunk(
   "api/followUser",
-  async ({ userToken, userBId, userADetails }, { dispatch, getState }) => {
-    const {
-      userData: { name, userName, userId, userImage },
-    } = getState();
+  async ({ userToken, userBId }, { dispatch }) => {
     const response = await axios.post(
       "https://fin-twitter-backend.herokuapp.com/api/users/follow",
       {
@@ -24,7 +21,7 @@ export const followUserAPI = createAsyncThunk(
       dispatch(
         newFollowerAdded({
           userBId,
-          userADetails: { name, userName, userImage, id: userId },
+          userADetails: response.data.userData,
         })
       );
     }
