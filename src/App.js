@@ -14,19 +14,6 @@ function App() {
     setDisplaySidebar((state) => !state);
   };
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   (() => {
-  //     if (
-  //       localStorage?.getItem("login") !== null &&
-  //       Number(new Date().getTime()) <
-  //         Number(JSON.parse(localStorage?.getItem("login")).expiryTime)
-  //     ) {
-  //       console.log(new Date().getTime());
-  //       console.log(JSON.parse(localStorage?.getItem("login")).expiryTime);
-  //       dispatch(logoutButtonPressed());
-  //     }
-  //   })();
-  // }, [dispatch]);
 
   useEffect(() => {
     if (userData.status === "idle" && authData.isLoggedIn === "true") {

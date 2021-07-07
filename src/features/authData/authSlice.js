@@ -1,11 +1,26 @@
 import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-const initialAuthData = JSON.parse(localStorage.getItem("login")) || {
-  isLoggedIn: false,
-  userToken: null,
-  userId: "",
+const getLoginDataWithExpiry = () => {
+  const initialAuthData = {
+    isLoggedIn: false,
+    userToken: null,
+    userId: "",
+  };
+  const authData = localStorage.getItem("login");
+  if (!authData) {
+    return initialAuthData;
+  }
+  const parsedAuthData = JSON.parse(authData);
+  const now = new Date();
+  if (now.getTime() > parsedAuthData.expiry) {
+    localStorage.removeItem("login");
+    return initialAuthData;
+  }
+  return parsedAuthData;
 };
+
+const initialAuthData = getLoginDataWithExpiry();
 
 export const loginAPICall = createAsyncThunk(
   "api/signup",
@@ -51,7 +66,7 @@ export const authSlice = createSlice({
           isLoggedIn: true,
           userToken: action.payload.token,
           userId: action.payload.userId,
-          expiryTime: new Date().getTime() + 86400000,
+          expiry: new Date().getTime() + 64800000,
         })
       );
       state.isLoggedIn = true;
