@@ -3,3 +3,4 @@ export { AddPost } from "./AddPost";
 export { Post } from "./Post";
 export { ProfileComponent } from "./Profile";
 export { Comment } from "./Comment";
+export { AddComment } from "./AddComment";

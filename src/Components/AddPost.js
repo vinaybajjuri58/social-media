@@ -39,16 +39,20 @@ export const AddPost = () => {
     }
   };
   const handleSubmit = () => {
-    dispatch(
-      addPost({
-        name,
-        userName,
-        userImage,
-        userId,
-        message: postContent,
-        userToken: authData.userToken,
-      })
-    );
+    if (postContent.length > 0) {
+      dispatch(
+        addPost({
+          name,
+          userName,
+          userImage,
+          userId,
+          message: postContent,
+          userToken: authData.userToken,
+        })
+      );
+    } else {
+      toast.error("Post cannot be empty !");
+    }
   };
   return (
     <div className="rounded-lg shadow-lg  bg-blue-50">
@@ -80,18 +84,3 @@ export const AddPost = () => {
     </div>
   );
 };
-
-// setLoading(true);
-// if (postContent.length > 0) {
-//   const { data } = await addPost({
-//     token: userToken,
-//     message: postContent,
-//   });
-//   setLoading(false);
-//   dispatch(
-//   );
-//   setPostContent("");
-// } else {
-//   setLoading(false);
-//   toast.error("Post cannot be empty !");
-// }

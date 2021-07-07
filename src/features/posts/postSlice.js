@@ -2,6 +2,27 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { newPostAdded } from "../userData/userSlice";
 import axios from "axios";
 
+export const addComment = createAsyncThunk(
+  "api/addComment",
+  async ({ userToken, comment, postId }) => {
+    const response = await axios({
+      method: "POST",
+      url: `https://fin-twitter-backend.herokuapp.com/api/comments/posts/${postId}`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+      data: {
+        comment,
+      },
+    });
+    return {
+      comment: response.data.comment,
+      userData: response.data.userId,
+      postId,
+    };
+  }
+);
+
 export const likeComment = createAsyncThunk(
   "api/likeComment",
   async ({ userToken, commentId, postId, userId }) => {
@@ -12,9 +33,10 @@ export const likeComment = createAsyncThunk(
         Authorization: `Bearer ${userToken}`,
       },
     });
-    return { response, userId, postId, commentId };
+    return { data: response.data, userId, postId, commentId };
   }
 );
+
 export const dislikeComment = createAsyncThunk(
   "api/disLikeComment",
   async ({ userToken, postId, commentId, userId }) => {
@@ -25,7 +47,7 @@ export const dislikeComment = createAsyncThunk(
         Authorization: `Bearer ${userToken}`,
       },
     });
-    return { response, commentId, postId, userId };
+    return { data: response.data, commentId, postId, userId };
   }
 );
 
@@ -250,6 +272,21 @@ export const postSlice = createSlice({
         state.singlePost.likes = state.singlePost.likes.filter(
           (user) => user !== action.payload.userId
         );
+      }
+    },
+    [addComment.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [addComment.fulfilled]: (state, action) => {
+      const {
+        payload: { comment, userData, postId },
+      } = action;
+      state.apiCallStatus = "success";
+      if (state.singlePost !== null && state.singlePost.id === postId) {
+        state.singlePost.comments.push({
+          ...comment,
+          userId: { ...userData, id: userData._id },
+        });
       }
     },
   },
