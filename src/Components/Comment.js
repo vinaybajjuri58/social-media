@@ -1,17 +1,21 @@
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-export const Comment = ({ commentData }) => {
-  const { userId } = useSelector((store) => store.authData);
-  const { userId, userName, userImage, name } = commentData;
+import { likeComment, dislikeComment } from "../features/posts/postSlice";
+import { useSelector, useDispatch } from "react-redux";
+export const Comment = ({ commentData, postId }) => {
+  const { userId, userToken } = useSelector((store) => store.authData);
+  const {
+    comment,
+    likes,
+    userId: { userName, name, userImage, id },
+  } = commentData;
+  const dispatch = useDispatch();
+  const dummyUserImage =
+    "https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png";
   return (
-    <div key={commentId}>
+    <div>
       <div className="flex flex-shrink-0 p-4 pb-0">
         <Link
-          to={
-            userId === commentData.userId
-              ? "/profile"
-              : `/profile/${commentData.userId}`
-          }
+          to={userId === id ? "/profile" : `/profile/${id}`}
           className="flex-shrink-0 group block"
         >
           <div className="flex items-center">
@@ -35,18 +39,40 @@ export const Comment = ({ commentData }) => {
       </div>
       <div className="pl-16">
         <p className=" text-base  width-auto  font-medium  text-black  flex-shrink">
-          {message}
+          {comment}
         </p>
       </div>
       <div>
-        <div className="flex items-center py-4 justify-evenly ">
-          <div className=" flex items-center text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
+        <div className="flex items-center py-4">
+          <div className=" flex px-20 text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
             {likes.includes(userId) ? (
-              <button>
+              <button
+                onClick={() =>
+                  dispatch(
+                    dislikeComment({
+                      userToken,
+                      commentId: commentData._id,
+                      userId,
+                      postId,
+                    })
+                  )
+                }
+              >
                 <i className="fas fa-heart text-red-600"></i>
               </button>
             ) : (
-              <button>
+              <button
+                onClick={() =>
+                  dispatch(
+                    likeComment({
+                      userToken,
+                      commentId: commentData._id,
+                      userId,
+                      postId,
+                    })
+                  )
+                }
+              >
                 <i className="fas fa-heart"></i>
               </button>
             )}

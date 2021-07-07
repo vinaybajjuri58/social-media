@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Post } from "../../Components/Post";
 import { useParams } from "react-router-dom";
 import { css } from "@emotion/react";
+import { Comment } from "../../Components/Comment";
 import BeatLoader from "react-spinners/BeatLoader";
 import { getSinglePost } from "./postSlice";
 import { useEffect } from "react";
@@ -20,11 +21,6 @@ export const SinglePost = () => {
       dispatch(getSinglePost({ postId }));
     }
   }, [dispatch, postId, singlePost]);
-  useEffect(() => {
-    if (singlePost !== null) {
-      console.log(singlePost);
-    }
-  }, [singlePost]);
   return (
     <div>
       <div className="fixed mt-20 ml-20">
@@ -40,16 +36,26 @@ export const SinglePost = () => {
         )}
       </div>
       {singlePost !== null && postId === singlePost._id && (
-        <Post
-          postData={{
-            ...singlePost,
-            userId: singlePost.userId.id,
-            name: singlePost.userId.name,
-            userImage: singlePost.userId.userImage,
-            userName: singlePost.userId.userName,
-            postId: singlePost._id,
-          }}
-        />
+        <>
+          <Post
+            postData={{
+              ...singlePost,
+              userId: singlePost.userId.id,
+              name: singlePost.userId.name,
+              userImage: singlePost.userId.userImage,
+              userName: singlePost.userId.userName,
+              postId: singlePost._id,
+            }}
+          />
+          {singlePost.comments.length > 0 &&
+            singlePost.comments.map((comment) => (
+              <Comment
+                key={comment._id}
+                commentData={comment}
+                postId={singlePost._id}
+              />
+            ))}
+        </>
       )}
     </div>
   );

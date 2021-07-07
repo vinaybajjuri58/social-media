@@ -2,6 +2,33 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { newPostAdded } from "../userData/userSlice";
 import axios from "axios";
 
+export const likeComment = createAsyncThunk(
+  "api/likeComment",
+  async ({ userToken, commentId, postId, userId }) => {
+    const response = await axios({
+      method: "POST",
+      url: `https://fin-twitter-backend.herokuapp.com/api/comments/${commentId}/likes`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return { response, userId, postId, commentId };
+  }
+);
+export const dislikeComment = createAsyncThunk(
+  "api/disLikeComment",
+  async ({ userToken, postId, commentId, userId }) => {
+    const response = await axios({
+      method: "DELETE",
+      url: `https://fin-twitter-backend.herokuapp.com/api/comments/${commentId}/likes`,
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return { response, commentId, postId, userId };
+  }
+);
+
 export const getSinglePost = createAsyncThunk(
   "api/getSinglePost",
   async ({ postId }) => {
@@ -102,6 +129,43 @@ export const postSlice = createSlice({
     },
   },
   extraReducers: {
+    [likeComment.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [likeComment.fulfilled]: (state, action) => {
+      const {
+        payload: { userId, postId, commentId },
+      } = action;
+      state.apiCallStatus = "success";
+      if (state.singlePost !== null && postId === state.singlePost.id) {
+        const commentIndex = state.singlePost.comments.findIndex(
+          (comment) => comment.id === commentId
+        );
+        if (commentIndex !== -1) {
+          state.singlePost.comments[commentIndex].likes.push(userId);
+        }
+      }
+    },
+    [dislikeComment.pending]: (state) => {
+      state.apiCallStatus = "loading";
+    },
+    [dislikeComment.fulfilled]: (state, action) => {
+      const {
+        payload: { userId, postId, commentId },
+      } = action;
+      state.apiCallStatus = "success";
+      if (state.singlePost !== null && postId === state.singlePost.id) {
+        const commentIndex = state.singlePost.comments.findIndex(
+          (comment) => comment.id === commentId
+        );
+        if (commentIndex !== -1) {
+          state.singlePost.comments[commentIndex].likes =
+            state.singlePost.comments[commentIndex].likes.filter(
+              (user) => user !== userId
+            );
+        }
+      }
+    },
     [getSinglePost.pending]: (state) => {
       state.apiCallStatus = "loading";
     },
