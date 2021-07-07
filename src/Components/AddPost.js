@@ -51,15 +51,15 @@ export const AddPost = () => {
     );
   };
   return (
-    <div className="rounded-lg shadow-lg bg-blue-50 z-0">
-      <div className="relative p-4 pl-20 z-0">
+    <div className="rounded-lg shadow-lg  bg-blue-50">
+      <div className="p-4 pl-20">
         <img
-          className="absolute top-0 left-0 ml-4 mt-4 rounded-full"
+          className="absolute top-0 left-0 ml-4 mt-4 z-0 rounded-full"
           src={dummyUserImage}
           alt="Hello World"
         />
         <textarea
-          className="bg-transparent pt-4 w-full text-black text-md outline-none"
+          className="bg-transparent pt-4 w-full text-black text-md"
           placeholder="What's happening?"
           value={postContent}
           onChange={handleChange}

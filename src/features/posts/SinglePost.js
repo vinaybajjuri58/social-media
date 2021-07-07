@@ -20,6 +20,9 @@ export const SinglePost = () => {
       dispatch(getSinglePost({ postId }));
     }
   }, [dispatch, postId, singlePost]);
+  if (singlePost !== null) {
+    console.log(singlePost.comments);
+  }
   return (
     <div>
       <div className="fixed mt-20 ml-20">

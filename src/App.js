@@ -29,15 +29,20 @@ function App() {
   return (
     <div>
       <ToastContainer />
-      <TopNavBar toggleDisplay={sidebarToggler} />
-      <div className="flex relative top-16">
+      <TopNavBar
+        loggedIn={authData.isLoggedIn}
+        toggleDisplay={sidebarToggler}
+      />
+      <div className="flex relative top-16 z-20">
         <div
-          className="fixed"
-          style={{ display: displaySidebar ? "block" : "none" }}
+          className=" absolute z-20 md:fixed"
+          style={{
+            display: displaySidebar ? "block" : "none",
+          }}
         >
           {authData.isLoggedIn && <Navbar />}
         </div>
-        <div className="w-full md:w-4/6 lg:w-8/12 md:relative md:left-60">
+        <div className="w-full md:w-4/6 md:pl-4  lg:w-8/12 md:relative md:left-60 sm:z-0">
           <RoutesComponent />
         </div>
       </div>

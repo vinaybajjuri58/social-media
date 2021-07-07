@@ -60,7 +60,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
             <div style={{ marginTop: "-6rem" }}>
               <div
                 style={{ height: "9rem", width: "9rem" }}
-                className="md rounded-full relative avatar"
+                className="md relative rounded-full avatar "
               >
                 <img
                   style={{ height: "9rem", width: "9rem" }}

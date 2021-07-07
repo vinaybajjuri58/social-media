@@ -4,7 +4,7 @@ import { logoutButtonPressed } from "../features/authData/authSlice";
 export const Navbar = () => {
   const dispatch = useDispatch();
   return (
-    <div className="sidebar w-64 space-y-6 py-2 px-2  w-1/8 bg-blue-900 block z-20 md:bg-white md:text-blue-600">
+    <div className="sidebar w-64 space-y-6 py-2 px-2 fixed  bg-blue-900 block  md:bg-white md:text-blue-600">
       <div className="h-screen pr-3">
         <nav className="mt-5 px-2">
           <NavLink
@@ -56,15 +56,17 @@ export const Navbar = () => {
   );
 };
 
-export const TopNavBar = ({ toggleDisplay }) => {
+export const TopNavBar = ({ loggedIn, toggleDisplay }) => {
   return (
-    <div className="fixed p-2 h-16 text-2xl bg-blue-600 text-gray-100 w-full z-10">
-      <button
-        className="sm:block md:hidden inline-block"
-        onClick={toggleDisplay}
-      >
-        X
-      </button>
+    <div className="fixed p-2 h-16 text-2xl bg-blue-900 text-gray-100 w-full z-40">
+      {loggedIn && (
+        <button
+          className="sm:block md:hidden inline-block"
+          onClick={toggleDisplay}
+        >
+          X
+        </button>
+      )}
       <Link to="/">
         <h1 className="px-8 py-2 inline-block">Fin-Tweets</h1>
       </Link>
