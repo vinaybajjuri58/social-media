@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutButtonPressed } from "../features/authData/authSlice";
 export const Navbar = () => {
@@ -39,10 +39,11 @@ export const Navbar = () => {
           >
             posts
           </NavLink>
-
-          <button className="bg-grey-400 hover:bg-blue-500 hover:text-gray-100 w-full mt-5 bg-gray-300 text-blue-700  font-bold  py-2  px-4 rounded-full">
-            Tweet
-          </button>
+          <Link to="/">
+            <button className="bg-grey-400 hover:bg-blue-500 hover:text-gray-100 w-full mt-5 bg-gray-300 text-blue-700  font-bold  py-2  px-4 rounded-full">
+              Tweet
+            </button>
+          </Link>
           <button
             onClick={() => dispatch(logoutButtonPressed())}
             className="bg-grey-400 hover:bg-red-500 hover:text-white border-2 border-red-500  text-red-500 w-full mt-5  font-bold  py-2  px-4 rounded-full"
@@ -64,7 +65,9 @@ export const TopNavBar = ({ toggleDisplay }) => {
       >
         X
       </button>
-      <h1 className="px-8 py-2 inline-block">Fin-Tweets</h1>
+      <Link to="/">
+        <h1 className="px-8 py-2 inline-block">Fin-Tweets</h1>
+      </Link>
     </div>
   );
 };
