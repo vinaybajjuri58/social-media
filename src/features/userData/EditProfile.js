@@ -103,9 +103,9 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
     <div
       id="modal"
       style={{ display: displayState }}
-      className="modal md:mt-16"
+      className="modal md:m-auto w-full p-0 md:w-8/12  bg-gray-50 md:ml-24"
     >
-      <div className="modal-content modal-theme md:w-8/12 m-auto -mt-6">
+      <div className="modal-content modal-theme  m-auto -mt-6">
         {loading && (
           <BeatLoader
             color={color}
@@ -114,12 +114,12 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
             size={15}
           />
         )}
-        <div className="md:col-span-1">
+        <div className="md:col-span-1 w-full mt-20 md:px-28">
           <div className="px-4 sm:px-0">
             <h3 className="text-lg font-medium leading-6 text-gray-900">
               Profile
             </h3>
-            <p className="mt-1 text-sm text-gray-600">
+            <p className="mt-1 text-sm text-black">
               This information will be displayed publicly so be careful what you
               share.
             </p>
