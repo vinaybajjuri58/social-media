@@ -9,7 +9,7 @@ export const updateProfile = async ({
   let response = {};
   try {
     response = await axios.post(
-      "https://fin-twitter-backend.herokuapp.com/api/users/",
+      "http://localhost:5000/api/users/",
       {
         bio,
         websiteUrl,

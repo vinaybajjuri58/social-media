@@ -48,7 +48,9 @@ export const Post = ({ postData }) => {
       <div>
         <div className="flex items-center py-4 justify-evenly ">
           <div className=" flex items-center  p-1 m-1 text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
-            <i className="fas fa-comment"></i>
+            <Link to={`/posts/${postId}`}>
+              <i className="fas fa-comment"></i>{" "}
+            </Link>
             <span>{comments.length > 0 ? comments.length : ""} </span>
           </div>
           <div className=" flex items-center text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
@@ -58,7 +60,7 @@ export const Post = ({ postData }) => {
                   dispatch(dislikePost({ userToken, postId, userId }))
                 }
               >
-                <i className="fas fa-heart text-red-600"></i>
+                <i className="fas fa-heart text-red-600"></i>{" "}
               </button>
             ) : (
               <button
@@ -66,10 +68,10 @@ export const Post = ({ postData }) => {
                   dispatch(likePost({ userToken, postId, userId }))
                 }
               >
-                <i className="fas fa-heart"></i>
+                <i className="fas fa-heart"></i>{" "}
               </button>
             )}
-            <span>{likes.length > 0 ? likes.length : ""} </span>
+            <span> {likes.length > 0 ? likes.length : " "} </span>
           </div>
         </div>
       </div>

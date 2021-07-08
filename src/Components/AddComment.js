@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 import { addComment } from "../features/posts/postSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 export const AddComment = ({ userToken, postId }) => {
   const [commentContent, setCommentContent] = useState("");
   const [errorInContent, setErrorInContent] = useState(null);
+  const { userImage } = useSelector((store) => store.userData);
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setCommentContent(e.target.value);
@@ -27,11 +29,13 @@ export const AddComment = ({ userToken, postId }) => {
   return (
     <div className="rounded-lg shadow-lg bg-blue-50">
       <div className="p-4 pl-20 relative flex flex-col">
-        <img
-          className="absolute top-0 left-0 ml-4 mt-4 z-0 rounded-full"
-          src={dummyUserImage}
-          alt="Hello World"
-        />
+        <Link to="/profile">
+          <img
+            className="absolute top-0 left-0 ml-4 mt-4 z-0 rounded-full h-10 w-10"
+            src={userImage.length > 0 ? userImage : dummyUserImage}
+            alt="Hello World"
+          />
+        </Link>
         <div className="flex justify-between">
           <input
             className="text-black border-transparent text-md w-3/4"

@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import { RoutesComponent } from "./Routes";
 import { Navbar, TopNavBar } from "./Components";
 import { useSelector, useDispatch } from "react-redux";
+import { getUserDataAPI } from "./features/userData/userSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { logoutButtonPressed } from "./features/authData/authSlice";
-import { reload, getUserDataAPI } from "./features/userData/userSlice";
+import { css } from "@emotion/react";
+import BeatLoader from "react-spinners/BeatLoader";
+const override = css`
+  display: block;
+  margin: 80px 80px;
+  border-color: blue;
+`;
+const color = "blue";
 function App() {
   const authData = useSelector((store) => store.authData);
   const userData = useSelector((store) => store.userData);
@@ -16,16 +23,11 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userData.status === "idle" && authData.isLoggedIn === "true") {
+    if (userData.status === "idle") {
       dispatch(getUserDataAPI({ userToken: authData.userToken }));
     }
   }, [authData.userToken, dispatch, userData.status, authData.isLoggedIn]);
 
-  useEffect(() => {
-    if (userData.status === "success" && userData.userId !== authData.userId) {
-      dispatch(reload());
-    }
-  }, [userData.status, userData.userId, authData.userId, dispatch, userData]);
   return (
     <div>
       <ToastContainer />
@@ -43,7 +45,15 @@ function App() {
           {authData.isLoggedIn && <Navbar />}
         </div>
         <div className="w-full md:w-4/6 md:pl-4  lg:w-8/12 md:relative md:left-60 sm:z-0">
-          <RoutesComponent />
+          {userData.status === "loading" && (
+            <BeatLoader
+              color={color}
+              loading={userData.status}
+              css={override}
+              size={15}
+            />
+          )}
+          {userData.status === "success" && <RoutesComponent />}
         </div>
       </div>
     </div>

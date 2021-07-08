@@ -14,6 +14,7 @@ const override = css`
 const color = "blue";
 export const Posts = ({ userId }) => {
   const postsData = useSelector((store) => store.postsData);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (postsData.status === "idle") {

@@ -58,8 +58,8 @@ export const AddPost = () => {
     <div className="rounded-lg shadow-lg  bg-blue-50">
       <div className="p-4 pl-20">
         <img
-          className="absolute top-0 left-0 ml-4 mt-4 z-0 rounded-full"
-          src={dummyUserImage}
+          className="absolute top-0 left-0 ml-8 mt-8 z-0  rounded-full h-10 w-10"
+          src={userImage.length > 0 ? userImage : dummyUserImage}
           alt="Hello World"
         />
         <textarea

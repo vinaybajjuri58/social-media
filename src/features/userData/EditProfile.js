@@ -90,11 +90,12 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
         profileDataUpdated({
           bio: userData.bio,
           websiteUrl: userData.websiteUrl,
-          profileImage: imageData.profileImage,
-          coverImage: imageData.coverImage,
+          profileImage:
+            imageData.profileImage !== null ? imageData.profileImage : "",
+          coverImage: imageData.coverImage !== null ? imageData.coverImage : "",
         })
       );
-      toast.info("Updated profile data");
+      toast.success("Updated profile data");
     } else {
       toast.error("Please try again !");
     }
