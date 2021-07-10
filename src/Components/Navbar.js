@@ -61,10 +61,10 @@ export const TopNavBar = ({ loggedIn, toggleDisplay }) => {
     <div className="fixed p-2 h-16 text-2xl bg-blue-900 text-gray-100 w-full z-40">
       {loggedIn && (
         <button
-          className="sm:block md:hidden inline-block"
+          className="sm:block md:hidden ml-2 inline-block"
           onClick={toggleDisplay}
         >
-          X
+          <i class="fas fa-bars"></i>
         </button>
       )}
       <Link to="/">

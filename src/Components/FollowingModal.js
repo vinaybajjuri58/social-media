@@ -16,7 +16,7 @@ export const FollowingModal = ({ following, displayState, toggleDisplay }) => {
   const { apiCallStatus } = useSelector((store) => store.userData);
   return (
     <div
-      className="rounded-lg shadow-lg bg-gray-100 modal max-h-96 mt-6 w-full md:mt-20 md:ml-80 z-10  md:w-1/3 p-0"
+      className="rounded-lg shadow-lg bg-gray-100 modal max-h-96  w-full mt-20 md:ml-80 z-10  md:w-1/3 p-0"
       id="modal"
       style={{
         display: displayState ? "block" : "none",

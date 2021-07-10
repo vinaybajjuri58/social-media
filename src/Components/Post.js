@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { likePost, dislikePost } from "../features/posts/postSlice";
+import { toast } from "react-toastify";
 export const Post = ({ postData }) => {
   const { userId, userToken } = useSelector((store) => store.authData);
   const dispatch = useDispatch();
@@ -72,6 +73,18 @@ export const Post = ({ postData }) => {
               </button>
             )}
             <span> {likes.length > 0 ? likes.length : " "} </span>
+          </div>
+          <div className=" flex items-center text-gray-800 hover:text-blue-400 transition duration-350 ease-in-out">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `https://fin-tweets.netlify.app/posts/${postId}`
+                );
+                toast.dark("link copied to clipboard");
+              }}
+            >
+              <i class="fas fa-share"></i>
+            </button>
           </div>
         </div>
       </div>
