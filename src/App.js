@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getUserDataAPI } from "./features/userData/userSlice";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import { css } from "@emotion/react";
+
 function App() {
   const authData = useSelector((store) => store.authData);
   const userData = useSelector((store) => store.userData);

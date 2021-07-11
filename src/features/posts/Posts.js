@@ -1,17 +1,10 @@
-import { Post } from "../../Components/Post";
+import { Post, LoadingComponent } from "../../Components/";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getPosts } from "./postSlice";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 import { toast } from "react-toastify";
 import { AddPost } from "../../Components/AddPost";
-const override = css`
-  display: block;
-  margin: 80px 80px;
-  border-color: blue;
-`;
-const color = "blue";
+
 export const Posts = ({ userId }) => {
   const postsData = useSelector((store) => store.postsData);
 
@@ -35,22 +28,11 @@ export const Posts = ({ userId }) => {
     <div className="w-full">
       <div className="fixed mt-20 ml-20">
         {postsData.apiCallStatus === "loading" && (
-          <BeatLoader
-            color={color}
-            loading={postsData.apiCallStatus}
-            css={override}
-            size={15}
-          />
+          <LoadingComponent apiCallStatus={postsData.apiCallStatus} />
         )}
       </div>
       {postsData.status === "loading" && (
-        <BeatLoader
-          color={color}
-          loading={postsData.status}
-          className="fixed top-1/2 left-1/2"
-          css={override}
-          size={15}
-        />
+        <LoadingComponent apiCallStatus={postsData.status} />
       )}
       {postsData.status === "success" && (
         <div>

@@ -1,18 +1,10 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProfileData, resetStatus } from "./profileSlice";
-import { ProfileComponent } from "../../Components";
+import { ProfileComponent, LoadingComponent } from "../../Components";
 import { Posts } from "../posts/Posts";
 import { useParams } from "react-router-dom";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 import { toast } from "react-toastify";
-const override = css`
-  display: block;
-  margin: 80px 80px;
-  border-color: blue;
-`;
-const color = "blue";
 
 export const Profile = () => {
   const profileData = useSelector((store) => store.profileData);
@@ -36,12 +28,7 @@ export const Profile = () => {
   return (
     <div className="w-full">
       {profileData.status === "loading" && (
-        <BeatLoader
-          color={color}
-          loading={profileData.status}
-          css={override}
-          size={15}
-        />
+        <LoadingComponent apiCallStatus={profileData.status} />
       )}
       {profileData.status === "success" && (
         <div>
@@ -50,12 +37,7 @@ export const Profile = () => {
           <div>
             <div className="fixed mt-20 ml-20">
               {profileData.apiCallStatus === "loading" && (
-                <BeatLoader
-                  color={color}
-                  loading={profileData.apiCallStatus}
-                  css={override}
-                  size={15}
-                />
+                <LoadingComponent apiCallStatus={profileData.apiCallStatus} />
               )}
             </div>
             <div>

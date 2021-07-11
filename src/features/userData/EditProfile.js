@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { css } from "@emotion/react";
-import BeatLoader from "react-spinners/BeatLoader";
 import { updateProfile } from "./apiCalls";
 import { profileDataUpdated } from "./userSlice";
-const override = css`
-  display: block;
-  margin: auto 2px;
-  position: absolute;
-  top: 160px;
-  left: 260px;
-  align-self: center;
-  border-color: blue;
-`;
-const color = "blue";
+import { LoadingComponent } from "../../Components";
+
 const initialUserData = {
   websiteUrl: "",
   profilePicUrl: "",
@@ -107,14 +97,7 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
       className="modal md:m-auto w-full p-0 md:w-8/12  bg-gray-50 md:ml-24"
     >
       <div className="modal-content modal-theme  m-auto -mt-6">
-        {loading && (
-          <BeatLoader
-            color={color}
-            loading={loading}
-            css={override}
-            size={15}
-          />
-        )}
+        {loading && <LoadingComponent apiCallStatus={loading} />}
         <div className="md:col-span-1 w-full mt-20 md:px-28">
           <div className="px-4 sm:px-0">
             <h3 className="text-lg font-medium leading-6 text-gray-900">

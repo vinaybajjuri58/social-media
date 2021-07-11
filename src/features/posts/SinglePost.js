@@ -1,17 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { Post } from "../../Components/Post";
 import { useParams } from "react-router-dom";
-import { css } from "@emotion/react";
-import { Comment, AddComment } from "../../Components/";
-import BeatLoader from "react-spinners/BeatLoader";
+import { Comment, AddComment, Post, LoadingComponent } from "../../Components/";
 import { getSinglePost } from "./postSlice";
 import { useEffect } from "react";
-const override = css`
-  display: block;
-  margin: 80px 80px;
-  border-color: blue;
-`;
-const color = "blue";
+
 export const SinglePost = () => {
   const dispatch = useDispatch();
   const { postId } = useParams();
@@ -29,12 +21,7 @@ export const SinglePost = () => {
         {(singlePost === null ||
           apiCallStatus === "loading" ||
           postId !== singlePost._id) && (
-          <BeatLoader
-            color={color}
-            loading={apiCallStatus}
-            css={override}
-            size={15}
-          />
+          <LoadingComponent apiCallStatus={apiCallStatus} />
         )}
       </div>
       {singlePost !== null && postId === singlePost._id && (
