@@ -24,6 +24,7 @@ export const profileSlice = createSlice({
     website: "",
     bio: "",
     userName: "",
+    coverImage: "",
   },
   reducers: {
     resetStatus: (state) => {

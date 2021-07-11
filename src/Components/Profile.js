@@ -43,7 +43,10 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
         className="w-full bg-cover bg-no-repeat bg-center"
         style={{
           height: "200px",
-          backgroundImage: `url(${dummyBackground})`,
+          backgroundImage:
+            userData.coverImage.length > 0
+              ? `url(${userData.coverImage})`
+              : `url(${dummyBackground})`,
         }}
       ></div>
       <div className="p-4">
