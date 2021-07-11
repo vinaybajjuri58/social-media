@@ -52,7 +52,9 @@ export const Post = ({ postData }) => {
             <Link to={`/posts/${postId}`}>
               <i className="fas fa-comment"></i>{" "}
             </Link>
-            <span>{comments.length > 0 ? comments.length : ""} </span>
+            <span className="ml-1">
+              {comments.length > 0 ? comments.length : ""}{" "}
+            </span>
           </div>
           <div className=" flex items-center text-gray-400 hover:text-blue-400 transition duration-350 ease-in-out">
             {likes.includes(userId) ? (
@@ -61,7 +63,7 @@ export const Post = ({ postData }) => {
                   dispatch(dislikePost({ userToken, postId, userId }))
                 }
               >
-                <i className="fas fa-heart text-red-600"></i>{" "}
+                <i className="fas fa-heart text-red-600"></i>
               </button>
             ) : (
               <button
@@ -69,10 +71,13 @@ export const Post = ({ postData }) => {
                   dispatch(likePost({ userToken, postId, userId }))
                 }
               >
-                <i className="fas fa-heart"></i>{" "}
+                <i className="fas fa-heart"></i>
               </button>
             )}
-            <span> {likes.length > 0 ? likes.length : " "} </span>
+            <span className="ml-1">
+              {" "}
+              {likes.length > 0 ? likes.length : " "}{" "}
+            </span>
           </div>
           <div className=" flex items-center text-gray-800 hover:text-blue-400 transition duration-350 ease-in-out">
             <button
@@ -80,7 +85,7 @@ export const Post = ({ postData }) => {
                 navigator.clipboard.writeText(
                   `https://fin-tweets.netlify.app/posts/${postId}`
                 );
-                toast.dark("link copied to clipboard");
+                toast.info("link copied to clipboard");
               }}
             >
               <i class="fas fa-share"></i>

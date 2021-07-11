@@ -63,7 +63,7 @@ export const AddPost = () => {
           alt="Hello World"
         />
         <textarea
-          className="bg-transparent pt-4 w-full text-black text-md"
+          className="bg-transparent pt-4 w-full text-black text-md rounded-lg"
           placeholder="What's happening?"
           value={postContent}
           onChange={handleChange}
