@@ -32,7 +32,7 @@ export const Post = ({ postData }) => {
               <p className="text-base leading-6 font-medium text-black">
                 {name}
                 <span className="text-sm leading-5  font-medium  text-gray-400  group-hover:text-gray-300  transition  ease-in-out  duration-150">
-                  @{userName} . 16 April
+                  @{userName}
                 </span>
               </p>
             </div>
