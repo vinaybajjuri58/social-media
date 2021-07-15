@@ -1,7 +1,7 @@
 import { NavLink, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logoutButtonPressed } from "../features/authData/authSlice";
-export const Navbar = () => {
+export const Navbar = ({ toggleDisplay }) => {
   const dispatch = useDispatch();
   return (
     <div className="sidebar w-64 space-y-6 py-2 px-2 fixed  bg-blue-900 block  md:bg-white md:text-blue-600">
@@ -10,6 +10,7 @@ export const Navbar = () => {
           <NavLink
             to="/"
             activeClassName="bg-blue-200 text-blue-800 sm:text-blue-100 bg-grey-700"
+            onClick={toggleDisplay}
             className="  mt-1  group  flex  items-center  px-2  py-2  text-base  leading-6  font-semibold  rounded-full text-gray-300 md:text-blue-500 hover:text-blue-200  hover:bg-blue-600"
             end
           >
@@ -17,6 +18,7 @@ export const Navbar = () => {
           </NavLink>
           <NavLink
             to="/notifications"
+            onClick={toggleDisplay}
             activeClassName="bg-blue-200 text-blue-800 sm:text-blue-100 bg-grey-700"
             className="
             mt-1  group  flex  items-center  px-2  py-2  text-base  leading-6  font-semibold  rounded-full text-gray-300 md:text-blue-500 hover:text-blue-200 hover:bg-blue-600"
@@ -26,6 +28,7 @@ export const Navbar = () => {
 
           <NavLink
             to="/profile"
+            onClick={toggleDisplay}
             activeClassName="bg-blue-200 text-blue-800 sm:text-blue-100 bg-grey-700"
             className=" mt-1 group  flex  items-center  px-2  py-2  text-base  leading-6  font-semibold rounded-full text-gray-300 md:text-blue-500 hover:text-blue-200  hover:bg-blue-600"
             end
@@ -34,6 +37,7 @@ export const Navbar = () => {
           </NavLink>
           <NavLink
             to="/posts"
+            onClick={toggleDisplay}
             activeClassName="bg-blue-200 text-blue-800 sm:text-blue-100 bg-grey-700"
             className=" mt-1 group  flex  items-center  px-2  py-2  text-base  leading-6  font-semibold rounded-full text-gray-300 md:text-blue-500 hover:text-blue-200  hover:bg-blue-600"
           >
