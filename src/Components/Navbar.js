@@ -16,7 +16,7 @@ export const Navbar = ({ toggleDisplay }) => {
           >
             Home
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/notifications"
             onClick={toggleDisplay}
             activeClassName="bg-blue-200 text-blue-800 sm:text-blue-100 bg-grey-700"
@@ -24,7 +24,7 @@ export const Navbar = ({ toggleDisplay }) => {
             mt-1  group  flex  items-center  px-2  py-2  text-base  leading-6  font-semibold  rounded-full text-gray-300 md:text-blue-500 hover:text-blue-200 hover:bg-blue-600"
           >
             Notifications
-          </NavLink>
+          </NavLink> */}
 
           <NavLink
             to="/profile"
