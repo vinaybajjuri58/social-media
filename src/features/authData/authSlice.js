@@ -41,6 +41,7 @@ export const authSlice = createSlice({
   initialState: {
     status: "idle",
     errorMessage: "",
+    loginAPICall: false,
     userId: initialAuthData.userId,
     isLoggedIn: initialAuthData.isLoggedIn,
     userToken: initialAuthData.userToken,
@@ -58,6 +59,7 @@ export const authSlice = createSlice({
     [loginAPICall.pending]: (state) => {
       state.status = "loading";
       state.errorMessage = "";
+      state.loginAPICall = true;
     },
     [loginAPICall.fulfilled]: (state, action) => {
       localStorage.setItem(
@@ -70,6 +72,7 @@ export const authSlice = createSlice({
         })
       );
       state.isLoggedIn = true;
+      state.loginAPICall = true;
       state.userToken = action.payload.token;
       state.userId = action.payload.userId;
     },
