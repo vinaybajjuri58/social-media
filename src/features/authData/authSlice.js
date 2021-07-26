@@ -72,13 +72,14 @@ export const authSlice = createSlice({
         })
       );
       state.isLoggedIn = true;
-      state.loginAPICall = true;
+      state.loginAPICall = false;
       state.userToken = action.payload.token;
       state.userId = action.payload.userId;
     },
     [loginAPICall.rejected]: (state) => {
       state.status = "error";
       state.errorMessage = "Login Failed";
+      state.loginAPICall = false;
     },
   },
 });

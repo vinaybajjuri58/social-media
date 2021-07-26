@@ -1,5 +1,7 @@
 import { css } from "@emotion/react";
 import BeatLoader from "react-spinners/BeatLoader";
+import ClipLoader from "react-spinners/ClipLoader";
+
 const override = css`
   display: block;
   margin: 80px 80px;
@@ -15,4 +17,8 @@ export const LoadingComponent = ({ apiCallStatus }) => {
       size={15}
     />
   );
+};
+
+export const CircleLoading = () => {
+  return <ClipLoader color="white" loading={true} size={25} />;
 };

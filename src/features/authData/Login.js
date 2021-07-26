@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginAPICall } from "./authSlice";
 import { toast } from "react-toastify";
+import { CircleLoading } from "../../Components";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -19,6 +20,10 @@ export const Login = () => {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      email: "admin@gmail.com",
+      password: "123456789",
+    },
   });
   const authData = useSelector((store) => store.authData);
   const navigate = useNavigate();
@@ -32,7 +37,6 @@ export const Login = () => {
     }
   }, [authData.isLoggedIn, authData.status, authData.errorMessage, navigate]);
   const onSubmit = (data) => {
-    toast.info("LogginIn !!");
     dispatch(
       loginAPICall({
         email: data.email,
@@ -66,10 +70,10 @@ export const Login = () => {
               <span className="text-red-700">{errors.password?.message}</span>
               <div>
                 <button
-                  className="mt-4 mr-5 bg-indigo-500  text-white py-2 px-6 rounded-lg"
+                  className="mt-4 mr-5 bg-indigo-500 w-36 text-white py-2 px-6 rounded-lg"
                   type="submit"
                 >
-                  {authData.loginAPICall ? "LoggingIn.." : "Login"}
+                  {authData.loginAPICall ? <CircleLoading /> : "Login"}
                 </button>
                 <Link className="text-sm ml-5  hover:underline" to="/signup">
                   Signup
