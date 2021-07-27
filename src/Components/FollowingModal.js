@@ -44,7 +44,7 @@ export const FollowingModal = ({ following, displayState, toggleDisplay }) => {
           </div>
         ) : (
           <div className="relative p-4 pl-20 w-full border-gray-0">
-            <p>You are not following anyone</p>
+            <p>Following none</p>
           </div>
         )}
       </div>
