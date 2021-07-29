@@ -46,7 +46,10 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
           backgroundImage:
             userData.coverImage.length > 0
               ? `url(${userData.coverImage})`
-              : `url(${dummyBackground})`,
+              : `url(${dummyBackground
+                  .split("")
+                  .splice(0, 4, "https")
+                  .join("")})`,
         }}
       ></div>
       <div className="p-4">
@@ -78,7 +81,7 @@ export const ProfileComponent = ({ userProfile, toggleDisplay, userData }) => {
                   src={
                     userData.userImage.length > 0
                       ? userData.userImage
-                      : dummyAvatar
+                      : dummyAvatar.split("").splice(0, 4, "https").join("")
                   }
                   alt={userData.userName}
                 />

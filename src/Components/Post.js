@@ -8,7 +8,8 @@ export const Post = ({ postData }) => {
   const { userImage, message, userName, name, postId, likes, comments } =
     postData;
   const dummyUserImage =
-    "https://pbs.twimg.com/profile_images/1121328878142853120/e-rpjoJi_bigger.png";
+    "https://storage.googleapis.com/stateless-campfire-pictures/2019/05/e4629f8e-defaultuserimage-15579880664l8pc.jpg";
+
   return (
     <div key={postId}>
       <div className="flex flex-shrink-0 p-4 pb-0">
@@ -24,7 +25,11 @@ export const Post = ({ postData }) => {
             <div>
               <img
                 className="inline-block h-10 w-10 rounded-full z-0"
-                src={userImage.length > 0 ? userImage : dummyUserImage}
+                src={
+                  userImage.length > 0
+                    ? userImage.split("").splice(0, 4, "https").join("")
+                    : dummyUserImage
+                }
                 alt={name}
               />
             </div>

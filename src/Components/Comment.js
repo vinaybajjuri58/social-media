@@ -22,7 +22,11 @@ export const Comment = ({ commentData, postId }) => {
             <div>
               <img
                 className="inline-block h-10 w-10 rounded-full z-0"
-                src={userImage.length > 0 ? userImage : dummyUserImage}
+                src={
+                  userImage.length > 0
+                    ? userImage.split("").splice(0, 4, "https").join("")
+                    : dummyUserImage
+                }
                 alt={name}
               />
             </div>

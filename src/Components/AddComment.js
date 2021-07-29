@@ -32,7 +32,11 @@ export const AddComment = ({ userToken, postId }) => {
         <Link to="/profile">
           <img
             className="absolute top-0 left-0 ml-4 mt-4 z-0 rounded-full h-10 w-10"
-            src={userImage.length > 0 ? userImage : dummyUserImage}
+            src={
+              userImage.length > 0
+                ? userImage.split("").splice(0, 4, "https").join("")
+                : dummyUserImage
+            }
             alt="Hello World"
           />
         </Link>
