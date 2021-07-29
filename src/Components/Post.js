@@ -25,11 +25,7 @@ export const Post = ({ postData }) => {
             <div>
               <img
                 className="inline-block h-10 w-10 rounded-full z-0"
-                src={
-                  userImage.length > 0
-                    ? userImage.split("").splice(0, 4, "https").join("")
-                    : dummyUserImage
-                }
+                src={userImage.length > 0 ? userImage : dummyUserImage}
                 alt={name}
               />
             </div>

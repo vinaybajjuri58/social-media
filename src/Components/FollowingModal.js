@@ -35,6 +35,7 @@ export const FollowingModal = ({ following, displayState, toggleDisplay }) => {
           <button onClick={toggleDisplay} className="p-4 text-lg text-black">
             X
           </button>
+          <span className="p-4 text-lg text-black">Following</span>
         </div>
         {following.length > 0 ? (
           <div className="relative p-1 w-full border-gray-0">
