@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { updateProfile } from "./apiCalls";
 import { profileDataUpdated } from "./userSlice";
 import { LoadingComponent } from "../../Components";
+import { userProfileImageUpdated } from "../posts/postSlice";
 
 const initialUserData = {
   websiteUrl: "",
@@ -16,7 +17,7 @@ const imageUrls = {
   coverImage: null,
 };
 export const EditProfile = ({ displayState, changeDisplayState }) => {
-  const { website, bio, coverImage, userImage } = useSelector(
+  const { website, bio, coverImage, userId, userImage } = useSelector(
     (store) => store.userData
   );
   const dispatch = useDispatch();
@@ -85,6 +86,13 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
           coverImage: imageData.coverImage !== null ? imageData.coverImage : "",
         })
       );
+      dispatch(
+        userProfileImageUpdated({
+          userId: userId,
+          userImage:
+            imageData.profileImage !== null ? imageData.profileImage : "",
+        })
+      );
       toast.success("Updated profile data");
     } else {
       toast.error("Please try again !");
@@ -97,7 +105,9 @@ export const EditProfile = ({ displayState, changeDisplayState }) => {
       className="modal md:m-auto w-full p-0 md:w-8/12  bg-gray-50 md:ml-24"
     >
       <div className="modal-content modal-theme  m-auto -mt-6">
-        {loading && <LoadingComponent apiCallStatus={loading} />}
+        <div className="fixed mt-20 ml-20">
+          {loading && <LoadingComponent apiCallStatus={loading} />}
+        </div>
         <div className="md:col-span-1 w-full mt-20 md:px-28">
           <div className="px-4 sm:px-0">
             <h3 className="text-lg font-medium leading-6 text-gray-900">

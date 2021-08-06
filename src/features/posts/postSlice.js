@@ -149,6 +149,12 @@ export const postSlice = createSlice({
     resetSinglePost: (state) => {
       state.singlePost = null;
     },
+    userProfileImageUpdated: (state, action) => {
+      const { userId, userImage } = action.payload;
+      state.posts = state.posts.map((post) =>
+        post.userId === userId ? { ...post, userImage: userImage } : post
+      );
+    },
   },
   extraReducers: {
     [likeComment.pending]: (state) => {
@@ -291,6 +297,9 @@ export const postSlice = createSlice({
     },
   },
 });
-export const { apiCallStatusToInitialState, resetSinglePost } =
-  postSlice.actions;
+export const {
+  apiCallStatusToInitialState,
+  userProfileImageUpdated,
+  resetSinglePost,
+} = postSlice.actions;
 export default postSlice.reducer;
