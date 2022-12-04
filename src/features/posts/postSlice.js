@@ -7,7 +7,7 @@ export const addComment = createAsyncThunk(
   async ({ userToken, comment, postId }) => {
     const response = await axios({
       method: "POST",
-      url: `https://fin-twitter-backend.herokuapp.com/api/comments/posts/${postId}`,
+      url: `https://fin-twitter-backend.onrender.com/api/comments/posts/${postId}`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -28,7 +28,7 @@ export const likeComment = createAsyncThunk(
   async ({ userToken, commentId, postId, userId }) => {
     const response = await axios({
       method: "POST",
-      url: `https://fin-twitter-backend.herokuapp.com/api/comments/${commentId}/likes`,
+      url: `https://fin-twitter-backend.onrender.com/api/comments/${commentId}/likes`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -42,7 +42,7 @@ export const dislikeComment = createAsyncThunk(
   async ({ userToken, postId, commentId, userId }) => {
     const response = await axios({
       method: "DELETE",
-      url: `https://fin-twitter-backend.herokuapp.com/api/comments/${commentId}/likes`,
+      url: `https://fin-twitter-backend.onrender.com/api/comments/${commentId}/likes`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -55,7 +55,7 @@ export const getSinglePost = createAsyncThunk(
   "api/getSinglePost",
   async ({ postId }) => {
     const response = await axios.get(
-      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}`
+      `https://fin-twitter-backend.onrender.com/api/posts/${postId}`
     );
     return response.data;
   }
@@ -66,7 +66,7 @@ export const likePost = createAsyncThunk(
   async ({ userToken, postId, userId }) => {
     const response = await axios({
       method: "POST",
-      url: `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
+      url: `https://fin-twitter-backend.onrender.com/api/posts/${postId}/likes`,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -79,7 +79,7 @@ export const dislikePost = createAsyncThunk(
   "api/dislikePost",
   async ({ userToken, postId, userId }) => {
     const response = await axios.delete(
-      `https://fin-twitter-backend.herokuapp.com/api/posts/${postId}/likes`,
+      `https://fin-twitter-backend.onrender.com/api/posts/${postId}/likes`,
       {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -97,7 +97,7 @@ export const addPost = createAsyncThunk(
     { dispatch }
   ) => {
     const response = await axios.post(
-      "https://fin-twitter-backend.herokuapp.com/api/posts/",
+      "https://fin-twitter-backend.onrender.com/api/posts/",
       {
         message,
       },
@@ -127,7 +127,7 @@ export const addPost = createAsyncThunk(
 
 export const getPosts = createAsyncThunk("api/getPostsData", async () => {
   const response = await axios.get(
-    "https://fin-twitter-backend.herokuapp.com/api/posts"
+    "https://fin-twitter-backend.onrender.com/api/posts"
   );
   return response.data;
 });

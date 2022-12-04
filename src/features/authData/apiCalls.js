@@ -3,7 +3,7 @@ export const signUp = async ({ name, userName, email, password }) => {
   let response = {};
   try {
     response = await axios.post(
-      "https://fin-twitter-backend.herokuapp.com/api/users/signup",
+      "https://fin-twitter-backend.onrender.com/api/users/signup",
       {
         name,
         email,

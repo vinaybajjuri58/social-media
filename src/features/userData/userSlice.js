@@ -6,7 +6,7 @@ export const followUserAPI = createAsyncThunk(
   "api/followUser",
   async ({ userToken, userBId }, { dispatch }) => {
     const response = await axios.post(
-      "https://fin-twitter-backend.herokuapp.com/api/users/follow",
+      "https://fin-twitter-backend.onrender.com/api/users/follow",
       {
         userBId,
       },
@@ -33,7 +33,7 @@ export const unFollowUserAPI = createAsyncThunk(
   "api/unFollowUser",
   async ({ userToken, userBId, userId }, { dispatch }) => {
     const response = await axios.delete(
-      "https://fin-twitter-backend.herokuapp.com/api/users/follow",
+      "https://fin-twitter-backend.onrender.com/api/users/follow",
       {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -55,7 +55,7 @@ export const getUserDataAPI = createAsyncThunk(
   "api/getUserData",
   async ({ userToken }) => {
     const response = await axios.get(
-      "https://fin-twitter-backend.herokuapp.com/api/users/",
+      "https://fin-twitter-backend.onrender.com/api/users/",
       {
         headers: {
           Authorization: `Bearer ${userToken}`,

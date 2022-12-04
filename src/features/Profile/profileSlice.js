@@ -4,7 +4,7 @@ export const getProfileData = createAsyncThunk(
   "api/getProfileData",
   async ({ userId }) => {
     const response = await axios.get(
-      `https://fin-twitter-backend.herokuapp.com/api/users/${userId}`
+      `https://fin-twitter-backend.onrender.com/api/users/${userId}`
     );
     return response.data;
   }

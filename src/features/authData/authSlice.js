@@ -26,7 +26,7 @@ export const loginAPICall = createAsyncThunk(
   "api/signup",
   async ({ email, password }) => {
     const response = await axios.post(
-      "https://fin-twitter-backend.herokuapp.com/api/users/login",
+      "https://fin-twitter-backend.onrender.com/api/users/login",
       {
         email,
         password,
